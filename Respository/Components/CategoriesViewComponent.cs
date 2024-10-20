@@ -6,11 +6,22 @@ namespace QLDienThoai.Respository.Components
 {
 	public class CategoriesViewComponent : ViewComponent
 	{
-		private readonly QldienThoaiContext _dataContext;
-		public CategoriesViewComponent(QldienThoaiContext dataContext)
+		/*private readonly ITenRespository _ca;
+		public CategoriesViewComponent(ITenRespository ca)
 		{
-			_dataContext = dataContext;
+			_ca = ca;
 		}
-		public async Task<IViewComponentResult> InvokeAsync() => View(_dataContext.Categories.ToListAsync());
+		public IViewComponentResult Invoke()
+		{
+			var ca = _ca.GetAllLoaiSp().OrderBy(x => x.Name);
+			return View(ca);
+		}*/
+		private readonly QldienThoaiContext _dataContext;
+		public CategoriesViewComponent(QldienThoaiContext context)
+		{
+			_dataContext = context;
+		}
+
+		public async Task<IViewComponentResult> InvokeAsync() => View(await _dataContext.Categories.ToListAsync());
 	}
 }

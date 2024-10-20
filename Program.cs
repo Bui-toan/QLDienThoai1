@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
+using QLDienThoai.Respository;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("QldienThoaiContext");
 builder.Services.AddDbContext<QldienThoaiContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddScoped<ITenRespository, TenRespository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
