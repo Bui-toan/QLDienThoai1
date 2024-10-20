@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QLDT.Controllers
+namespace QLDienThoai.Controllers
 {
-    public class CategoryController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
+	public class CategoryController : Controller
+	{
+		public IActionResult Index()
+		{
+			return View();
+		}
 
-    }
+	}
 }

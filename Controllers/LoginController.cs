@@ -1,6 +1,6 @@
-﻿namespace QLDT.Controllers
+﻿namespace QLDienThoai.Controllers
 {
-    public class LoginController
-    {
-    }
+	public class LoginController
+	{
+	}
 }
