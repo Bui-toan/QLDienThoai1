@@ -155,7 +155,7 @@ public partial class QldienThoaiContext : DbContext
 				.HasForeignKey(d => d.BrandId)
 				.HasConstraintName("FK__SanPham__BrandId__619B8048");
 
-			entity.HasOne(d => d.Categories).WithMany(p => p.SanPhams)
+            entity.HasOne(d => d.Categories).WithMany(p => p.SanPhams)
 				.HasForeignKey(d => d.CategoriesId)
 				.HasConstraintName("FK__SanPham__Categor__60A75C0F");
 		});
