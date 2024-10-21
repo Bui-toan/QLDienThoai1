@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
 using System.Diagnostics;
 
@@ -17,7 +18,7 @@ namespace QLDienThoai.Controllers
 
 		public IActionResult Index()
 		{
-			var products = _dataContext.SanPhams.ToList();
+			var products = _dataContext.SanPhams.Include("Categories").Include("Brand").ToList();
 			return View(products);
 		}
 

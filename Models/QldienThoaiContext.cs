@@ -15,7 +15,7 @@ public partial class QldienThoaiContext : DbContext
 
 	public virtual DbSet<Brand> Brands { get; set; }
 
-	public virtual DbSet<Category> Categories { get; set; }
+	public virtual DbSet<Categories> Categories { get; set; }
 
 	public virtual DbSet<DanhGia> DanhGia { get; set; }
 
@@ -39,7 +39,7 @@ public partial class QldienThoaiContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai1;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -54,7 +54,7 @@ public partial class QldienThoaiContext : DbContext
 			entity.Property(e => e.Status).HasMaxLength(50);
 		});
 
-		modelBuilder.Entity<Category>(entity =>
+		modelBuilder.Entity<Categories>(entity =>
 		{
 			entity.HasKey(e => e.CategoriesId).HasName("PK__Categori__EFF907B09A8AD06F");
 
