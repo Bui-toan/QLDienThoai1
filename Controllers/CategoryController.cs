@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QLDT.Controllers
+namespace QLDienThoai.Controllers
 {
     public class CategoryController : Controller
     {
