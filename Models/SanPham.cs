@@ -5,7 +5,7 @@ namespace QLDienThoai.Models;
 
 public partial class SanPham
 {
-    public int IdBanPham { get; set; }
+    public int IdSanPham { get; set; }
 
     public string? Name { get; set; }
 
@@ -21,7 +21,7 @@ public partial class SanPham
 
     public virtual Brand? Brand { get; set; }
 
-    public virtual Category? Categories { get; set; }
+    public virtual Categories? Categories { get; set; }
 
     public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
 
