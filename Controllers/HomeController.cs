@@ -1,13 +1,11 @@
-using Dynamitey;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace QLDienThoai.Controllers
 {
-	public class HomeController : Controller
+    public class HomeController : Controller
 	{
 		private readonly QldienThoaiContext _dataContext;
 		private readonly ILogger<HomeController> _logger;
@@ -25,6 +23,10 @@ namespace QLDienThoai.Controllers
 		}
 
 		public IActionResult Privacy()
+		{
+			return View();
+		}
+		public IActionResult Contact()
 		{
 			return View();
 		}
