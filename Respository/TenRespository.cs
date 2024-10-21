@@ -9,19 +9,19 @@ namespace QLDienThoai.Respository
 		{
 			_context = context;
 		}
-		public Category Add(Category ca)
+		public Categories Add(Categories ca)
 		{
 			_context.Categories.Add(ca);
 			_context.SaveChanges();
 			return ca;
 		}
 
-		public Category Delete(Category ca)
+		public Categories Delete(Categories ca)
 		{
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Category> GetAllLoaiSp()
+		public IEnumerable<Categories> GetAllLoaiSp()
 		{
 
 			return _context.Categories;
@@ -29,12 +29,12 @@ namespace QLDienThoai.Respository
 
 		}
 
-		public Category GetLoaiSp(Category ca)
+		public Categories GetLoaiSp(Categories ca)
 		{
 			return _context.Categories.Find(ca);
 		}
 
-		public Category Update(Category ca)
+		public Categories Update(Categories ca)
 		{
 			_context.Update(ca);
 			_context.SaveChanges();

@@ -15,7 +15,7 @@ public partial class QldienThoaiContext : DbContext
 
 	public virtual DbSet<Brand> Brands { get; set; }
 
-	public virtual DbSet<Category> Categories { get; set; }
+	public virtual DbSet<Categories> Categories { get; set; }
 
 	public virtual DbSet<DanhGia> DanhGia { get; set; }
 
@@ -54,7 +54,7 @@ public partial class QldienThoaiContext : DbContext
 			entity.Property(e => e.Status).HasMaxLength(50);
 		});
 
-		modelBuilder.Entity<Category>(entity =>
+		modelBuilder.Entity<Categories>(entity =>
 		{
 			entity.HasKey(e => e.CategoriesId).HasName("PK__Categori__EFF907B09A8AD06F");
 

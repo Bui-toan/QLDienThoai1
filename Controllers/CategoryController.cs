@@ -2,12 +2,12 @@
 
 namespace QLDienThoai.Controllers
 {
-    public class CategoryController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
+	public class CategoryController : Controller
+	{
+		public IActionResult Index()
+		{
+			return View();
+		}
 
-    }
+	}
 }

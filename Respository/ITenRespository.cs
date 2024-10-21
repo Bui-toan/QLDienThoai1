@@ -4,10 +4,10 @@ namespace QLDienThoai.Respository
 {
 	public interface ITenRespository
 	{
-		Category Add(Category ca);
-		Category Update(Category ca);
-		Category Delete(Category ca);
-		Category GetLoaiSp(Category ca);
-		IEnumerable<Category> GetAllLoaiSp();
+		Categories Add(Categories ca);
+		Categories Update(Categories ca);
+		Categories Delete(Categories ca);
+		Categories GetLoaiSp(Categories ca);
+		IEnumerable<Categories> GetAllLoaiSp();
 	}
 }
