@@ -138,11 +138,11 @@ public partial class QldienThoaiContext : DbContext
 
 		modelBuilder.Entity<SanPham>(entity =>
 		{
-			entity.HasKey(e => e.IdBanPham).HasName("PK__SanPham__EC21BD235D20C44B");
+			entity.HasKey(e => e.IdSanPham).HasName("PK__SanPham__EC21BD235D20C44B");
 
 			entity.ToTable("SanPham");
 
-			entity.Property(e => e.IdBanPham)
+			entity.Property(e => e.IdSanPham)
 				.ValueGeneratedNever()
 				.HasColumnName("ID_Ban_Pham");
 			entity.Property(e => e.CategoriesId).HasColumnName("CategoriesID");

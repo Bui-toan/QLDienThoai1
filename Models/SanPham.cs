@@ -5,7 +5,7 @@ namespace QLDienThoai.Models;
 
 public partial class SanPham
 {
-    public int IdBanPham { get; set; }
+    public int IdSanPham { get; set; }
 
     public string? Name { get; set; }
 
