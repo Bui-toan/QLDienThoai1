@@ -1,11 +1,11 @@
 ﻿@using QLDienThoai.Models
 @model IEnumerable<SanPham>
 @{
-    ViewData["title"] = "Prouct Lists";    
+    ViewData["title"] = "Product Lists";    
 }
 
 <h1>List Products</h1>
-<a asp-action="Add" asp-controller="Product">Add Product</a>
+<a  asp-action="Create" asp-controller="Product" asp-area="Admin">Add Product</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -13,8 +13,9 @@
             <th scope="col">Product Name</th>
             <th scope="col">Product Description</th>
             <th scope="col">Product Price</th>
+            
             <th scope="col">Product Image</th>
-          
+            
             <th scope="col">Product Category</th>
             <th scope="col">Product Brand</th>
         </tr>
@@ -28,6 +29,7 @@
                 <td>@item.Name</td>
                 <td>@item.Description</td>
                 <td>@item.Price</td>
+                
                 <td>
                     <img src="~/images/@item.Images" width="120" />
                 </td>

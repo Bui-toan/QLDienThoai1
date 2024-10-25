@@ -15,7 +15,7 @@ public partial class DanhGia
 
     public string? Email { get; set; }
 
-    public int? Star { get; set; }
+    public int? Status { get; set; }
 
     public virtual SanPham? IdSanPhamNavigation { get; set; }
 }
