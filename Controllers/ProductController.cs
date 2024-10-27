@@ -24,14 +24,17 @@ namespace QLDienThoai.Controllers
 			return View(products);
 			;
 		}
-		public async Task<IActionResult> Details(int IdSanPham)
+		public async Task<IActionResult> Details(long IdSanPham)
 		{
 			if (IdSanPham < 0)
 			{
 				return RedirectToAction("Index");
 			}
 			var productsById = _dataContext.SanPhams.Where(p => p.IdSanPham == IdSanPham).FirstOrDefault();
-
+			var relatedProducts = await _dataContext.SanPhams
+			.Where(p => p.CategoriesId == productsById.CategoriesId && p.IdSanPham != productsById.IdSanPham).
+			 Take(4).ToListAsync();
+			ViewBag.RelatedProducts = relatedProducts;
 			return View(productsById);
 		}
 	}
