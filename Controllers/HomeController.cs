@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace QLDienThoai.Controllers
 {
-    public class HomeController : Controller
+	public class HomeController : Controller
 	{
 		private readonly QldienThoaiContext _dataContext;
 		private readonly ILogger<HomeController> _logger;
