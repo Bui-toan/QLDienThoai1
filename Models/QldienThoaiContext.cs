@@ -13,7 +13,7 @@ public partial class QldienThoaiContext : DbContext
 	{
 	}
 
-	public virtual DbSet<Brand> Brands { get; set; }
+	public virtual DbSet<Brands> Brands { get; set; }
 
 	public virtual DbSet<Categories> Categories { get; set; }
 
@@ -39,11 +39,11 @@ public partial class QldienThoaiContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai1;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai2;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<Brand>(entity =>
+		modelBuilder.Entity<Brands>(entity =>
 		{
 			entity.HasKey(e => e.BrandId).HasName("PK__Brands__DAD4F05E90ADE922");
 
@@ -73,7 +73,7 @@ public partial class QldienThoaiContext : DbContext
 
 			entity.Property(e => e.IdDanhGia)
 				.ValueGeneratedNever()
-				.HasColumnName("ID_DanhGia");
+				.HasColumnName("IdDanhGia");
 			entity.Property(e => e.Comment).HasMaxLength(255);
 			entity.Property(e => e.Email).HasMaxLength(100);
 			entity.Property(e => e.IdSanPham).HasColumnName("ID_SanPham");
@@ -144,13 +144,13 @@ public partial class QldienThoaiContext : DbContext
 
 			entity.Property(e => e.IdSanPham)
 				.ValueGeneratedNever()
-				.HasColumnName("ID_Ban_Pham");
+				.HasColumnName("IdSanPham");
 			entity.Property(e => e.CategoriesId).HasColumnName("CategoriesID");
 			entity.Property(e => e.Description).HasMaxLength(255);
 			entity.Property(e => e.Images).HasMaxLength(255);
 			entity.Property(e => e.Name).HasMaxLength(100);
 			entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
-
+			entity.Property(e => e.Slug).HasMaxLength(100);
 			entity.HasOne(d => d.Brand).WithMany(p => p.SanPhams)
 				.HasForeignKey(d => d.BrandId)
 				.HasConstraintName("FK__SanPham__BrandId__619B8048");

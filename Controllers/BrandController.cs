@@ -12,7 +12,7 @@ namespace QLDienThoai.Controllers
 		}
 		public async Task<IActionResult> Index(String Slug = "")
 		{
-			Brand brand = _dataContext.Brands.Where(c => c.Slug == Slug).FirstOrDefault();
+			Brands brand = _dataContext.Brands.Where(c => c.Slug == Slug).FirstOrDefault();
 			if (brand == null)
 			{
 				return RedirectToAction("Index");
