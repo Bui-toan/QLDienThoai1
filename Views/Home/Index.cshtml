@@ -16,7 +16,7 @@
 						<div class="productinfo text-center">
 							<img src="~/images/@item.Images" alt="@item.Name" width="100%" />
 							<h4>@item.Name</h4>
-							<h2>$@item.Price</h2>
+								<h2>@item.Price.ToString() USD</h2>
 							<p>Danh mục : @item.Categories.Name</p>
 							<p>Thương hiệu : @item.Brand.Name</p>
 							<a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
