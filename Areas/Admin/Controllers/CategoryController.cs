@@ -49,7 +49,36 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			}
 			return View(category);
 		}
-		[Route("Delete")]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit(int idCategogies)
+        {
+            Categories cate = await _context.Categories.FindAsync(idCategogies);
+            return View(cate);
+        }
+
+        [HttpPost]
+        [Route("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Categories category)
+        {
+            if (ModelState.IsValid)
+            {
+                category.Slug = category.Name.Replace(" ", "-");
+                var slug = await _context.SanPhams.FirstOrDefaultAsync(p => p.Slug == category.Slug);
+                if (slug != null)
+                {
+                    ModelState.AddModelError("", "Sản phẩm đã có trong database");
+                    return View(category);
+                }
+
+                _context.Categories.Update(category);
+                TempData["message"] = " Cập nhật danh mục thành công";
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Category");
+            }
+            return View(category);
+        }
+        [Route("Delete")]
 		public async Task<IActionResult> Delete(int idCategories)
 		{
 			 

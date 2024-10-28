@@ -38,7 +38,7 @@
                 <td>@item.Brand.Name</td>
                 <td>
                     <a asp-action="Edit"  class="btn btn-warning btn-sm" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">Edit</a>
-                    <a asp-action="Delete" class="btn btn-warning btn-sm" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">Delete</a>
+                    <a asp-action="Delete" class="btn btn-warning btn-sm confirmDeletion" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">Delete</a>
                 </td>
                
             </tr>
