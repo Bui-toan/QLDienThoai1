@@ -20,11 +20,11 @@ public partial class SanPham
 	public string? Slug { get; set; }
 	public string? Images { get; set; }
 
-	[NotMapped]
-	[FileExtension]
-	public IFormFile ImageUpload { get; set; }
-	[Required, Range(1, int.MaxValue, ErrorMessage = "Chọn 1 danh mục")]
-	public int? CategoriesId { get; set; }
+    [NotMapped]
+    [FileExtension]
+    public IFormFile? ImageUpload { get; set; }
+    [Required, Range(1, int.MaxValue, ErrorMessage = "Chọn 1 danh mục")]
+    public int? CategoriesId { get; set; }
 
 	public virtual Brands? Brand { get; set; }
 
