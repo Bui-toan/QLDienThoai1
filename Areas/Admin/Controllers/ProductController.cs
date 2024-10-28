@@ -8,7 +8,7 @@ using QLDienThoai.Models;
 namespace QLDienThoai.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Route("Product")]
+    //[Route("Admin/Product")]
     public class ProductController : Controller
     {
         private readonly QldienThoaiContext _context=new QldienThoaiContext();

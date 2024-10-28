@@ -20,7 +20,8 @@
 								<h2>@item.Price.ToString() USD</h2>
 								<p>Danh mục : @item.Categories.Name</p>
 								<p>Thương hiệu : @item.Brand.Name</p>
-								<a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+								<a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-idSanPham="@item.IdSanPham"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
                             </div>
                           </a>
 						</div>

@@ -1,0 +1,47 @@
+﻿@using QLDienThoai.Models
+@model IEnumerable<Categories>
+@{
+    ViewData["title"] = "Category Lists";
+}
+<p class="alert alert-success">@TempData["message"]</p>
+<h1>List Category</h1>
+<a asp-action="Create" asp-controller="Category" asp-area="Admin">Add Category</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">CateGory Name</th>
+            <th scope="col">Category Description</th>
+ 
+            <th scope="col">Product SLug</th>
+            <th scope="col">Category Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <th scope="row">@item.CategoriesId</th>
+                <td>@item.Name</td>
+                <td>@Html.Raw(@item.Description)</td>
+                <td>@item.Slug</td>
+                <td>
+                    @if (item.Status=="Active")
+                    {
+                        <span class="text text-success">Hiển thị</span>
+                    }
+                    else
+                    {
+                        <span class="text text-success">Ẩn </span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Category" asp-route-IdCategories="@item.CategoriesId">Edit</a>
+                    <a asp-action="Delete" class="btn btn-warning btn-sm" asp-controller="Category" asp-route-IdCategories="@item.CategoriesId">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
