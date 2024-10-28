@@ -18,7 +18,7 @@ namespace QLDienThoai.Controllers
 
 		public IActionResult Index()
 		{
-			var products = _dataContext.SanPhams.Include("Categories").Include("Brand").ToList();
+			var products = _dataContext.SanPhams.Include("Categories").Include("Brand");
 			return View(products);
 		}
 

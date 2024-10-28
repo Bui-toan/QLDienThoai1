@@ -24,7 +24,7 @@ public partial class SanPham
 
     [NotMapped]
     [FileExtension]
-    public IFormFile ImageUpload { get; set; }
+    public IFormFile? ImageUpload { get; set; }
     [Required, Range(1, int.MaxValue, ErrorMessage = "Chọn 1 danh mục")]
     public int? CategoriesId { get; set; }
 
