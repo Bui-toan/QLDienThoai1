@@ -2,6 +2,11 @@
 <div class="col-sm-3">
 	@Html.Partial("_SidebarPartial")
 </div>
+<style>
+	.product-image-wrapper{
+		height:450px;
+	}
+</style>
 
 <div class="col-sm-9 padding-right">
 	<div class="features_items">
@@ -19,7 +24,7 @@
 								<h2>@item.Price.ToString() USD</h2>
 							<p>Danh mục : @item.Categories.Name</p>
 							<p>Thương hiệu : @item.Brand.Name</p>
-							<a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-IdSanPham="@item.IdSanPham"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-idSanPham="@item.IdSanPham"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 						</div>
                        </a>
                     </div>

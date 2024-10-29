@@ -39,9 +39,9 @@ public partial class QldienThoaiContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai2;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-CHJGDDR\\SQLEXPRESS;Initial Catalog=QLDienThoai;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Brands>(entity =>
 		{
@@ -151,11 +151,12 @@ public partial class QldienThoaiContext : DbContext
 			entity.Property(e => e.Name).HasMaxLength(100);
 			entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
 			entity.Property(e => e.Slug).HasMaxLength(100);
-			entity.HasOne(d => d.Brand).WithMany(p => p.SanPhams)
-				.HasForeignKey(d => d.BrandId)
-				.HasConstraintName("FK__SanPham__BrandId__619B8048");
 
-			entity.HasOne(d => d.Categories).WithMany(p => p.SanPhams)
+            entity.HasOne(d => d.Brand).WithMany(p => p.SanPhams)
+                .HasForeignKey(d => d.BrandId)
+                .HasConstraintName("FK__SanPham__BrandId__619B8048");
+
+            entity.HasOne(d => d.Categories).WithMany(p => p.SanPhams)
 				.HasForeignKey(d => d.CategoriesId)
 				.HasConstraintName("FK__SanPham__Categor__60A75C0F");
 		});

@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
+        <form asp-action="Create" asp-controller="Product" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdSanPham" class="control-label"></label>
@@ -22,11 +22,11 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Slug" class="control-label"></label>
                 <input asp-for="Slug" class="form-control" />
                 <span asp-validation-for="Slug" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control" ></textarea>
@@ -42,14 +42,16 @@
                 <select asp-for="BrandId" class ="form-control" asp-items="ViewBag.Brands"></select>
             </div>
             <div class="form-group">
+                <label asp-for="CategoriesId" class="control-label"></label>
+                <select asp-for="CategoriesId" class="form-control" asp-items="ViewBag.Categories"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Images" class="control-label"></label>
                 <input asp-for="ImageUpload" class="form-control-file" />
                 <span asp-validation-for="ImageUpload" class="text-danger"></span>
+                <img  id="imgpreview" class="pt-2"/>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoriesId" class="control-label"></label>
-                <select asp-for="CategoriesId" class ="form-control" asp-items="ViewBag.Categories"></select>
-            </div>
+           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -58,14 +60,21 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Product">Back to List</a>
 </div>
 
+@section Scripts{
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        $("#ImageUpload").change(function () {
+            readURL(this);
+        })
+    </script>
+    <script>
+        CKEDITOR.replace('Description');
+    </script>
+}
 
-<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('Description');
-</script>
 
 
 
