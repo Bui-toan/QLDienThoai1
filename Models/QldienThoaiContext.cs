@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace QLDienThoai.Models;
 
-public partial class QldienThoaiContext : DbContext
+public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 {
 	public QldienThoaiContext()
 	{
@@ -39,10 +41,27 @@ public partial class QldienThoaiContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai1;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+		=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-FPHN58G4\\SQLEXPRESS;Initial Catalog=QLDienThoai;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		base.OnModelCreating(modelBuilder);
+
+		modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+		{
+			entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+		});
+
+		modelBuilder.Entity<IdentityUserRole<string>>(entity =>
+		{
+			entity.HasKey(e => new { e.UserId, e.RoleId });
+		});
+
+		modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+		{
+			entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+		});
+
 		modelBuilder.Entity<Brand>(entity =>
 		{
 			entity.HasKey(e => e.BrandId).HasName("PK__Brands__DAD4F05E90ADE922");
