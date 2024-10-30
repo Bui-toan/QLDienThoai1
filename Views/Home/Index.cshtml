@@ -6,13 +6,21 @@
 	.product-image-wrapper{
 		height:450px;
 	}
+
+	.container-center {
+		
+		place-items: center;
+		height: 100vh;
+	}
+	
+
 </style>
 
 <div class="col-sm-9 padding-right">
 	<div class="features_items">
 		<!--features_items-->
 		<h2 class="title text-center">Features Items</h2>
-		@foreach (var item in Model)
+		@foreach (var item in Model.Take(6))
 		{
 			<div class="col-sm-4">
 				<div class="product-image-wrapper">				
@@ -39,6 +47,10 @@
 			</div>
 
 		}
+		<div class="container-center">
+			<button class="btn btn-primary">View All</button>
+		</div>
+
 	</div><!--features_items-->
 
 

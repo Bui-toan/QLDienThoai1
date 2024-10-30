@@ -24,11 +24,7 @@
 					<span>
 						<span>@Model.Price.ToString() USD</span>
 						<label>Quantity: 1</label>
-						<input type="text" value="3" />
-						<button type="button" class="btn btn-fefault cart">
-							<i class="fa fa-shopping-cart"></i>
-							Add to cart
-						</button>
+						<a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-idSanPham="@Model.IdSanPham"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 					</span>
 					<p><b>Availability:</b> In Stock</p>
 					<p><b>Condition:</b> New</p>
