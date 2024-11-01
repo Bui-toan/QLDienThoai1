@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
 using QLDienThoai.Respository;
@@ -49,9 +49,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.UseAuthentication(); // đăng nhập
 
-app.UseAuthorization();
+app.UseAuthorization(); // kiểm tra quyền
 
 app.MapControllerRoute(
 	name: "Areas",

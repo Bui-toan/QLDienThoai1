@@ -31,7 +31,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 
 	public virtual DbSet<SanPham> SanPhams { get; set; }
 
-	public virtual DbSet<User> Users { get; set; }
+	public virtual DbSet<AppUser> Users { get; set; }
 
 	public virtual DbSet<UserClaim> UserClaims { get; set; }
 
