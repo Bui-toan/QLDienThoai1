@@ -15,7 +15,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 	{
 	}
 
-	public virtual DbSet<Brand> Brands { get; set; }
+	public virtual DbSet<Brands> Brands { get; set; }
 
 	public virtual DbSet<Categories> Categories { get; set; }
 
@@ -92,7 +92,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 
 			entity.Property(e => e.IdDanhGia)
 				.ValueGeneratedNever()
-				.HasColumnName("ID_DanhGia");
+				.HasColumnName("IdDanhGia");
 			entity.Property(e => e.Comment).HasMaxLength(255);
 			entity.Property(e => e.Email).HasMaxLength(100);
 			entity.Property(e => e.IdSanPham).HasColumnName("ID_SanPham");
@@ -163,12 +163,13 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 
 			entity.Property(e => e.IdSanPham)
 				.ValueGeneratedNever()
-				.HasColumnName("ID_Ban_Pham");
+				.HasColumnName("IdSanPham");
 			entity.Property(e => e.CategoriesId).HasColumnName("CategoriesID");
 			entity.Property(e => e.Description).HasMaxLength(255);
 			entity.Property(e => e.Images).HasMaxLength(255);
 			entity.Property(e => e.Name).HasMaxLength(100);
 			entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+			entity.Property(e => e.Slug).HasMaxLength(100);
 
 			entity.HasOne(d => d.Brand).WithMany(p => p.SanPhams)
 				.HasForeignKey(d => d.BrandId)

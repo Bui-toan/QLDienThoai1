@@ -4,6 +4,7 @@
 </div>
 
 <div class="col-sm-9 padding-right">
+	@Html.Partial("_FilterProductsPartial")
 	<div class="features_items">
 		<!--features_items-->
 		<h2 class="title text-center">Features Items</h2>
@@ -15,12 +16,13 @@
 						<div class="single-products">
 						  <a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">
 							<div class="productinfo text-center">
-								<img src="~/images/@item.Images" alt="@item.Name" width="100%" />
-								<h2>@item.Name</h2>
-								<h2>$@item.Price</h2>
+								<img src="~/images/@item.Images" alt="@item.Name" height="200px" weight="100px" />
+								<h4>@item.Name</h4>
+								<h2>@item.Price.ToString() USD</h2>
 								<p>Danh mục : @item.Categories.Name</p>
 								<p>Thương hiệu : @item.Brand.Name</p>
-								<a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+								<a class="btn btn-default add-to-cart" asp-action="Add" asp-controller="Cart" asp-route-idSanPham="@item.IdSanPham"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
                             </div>
                           </a>
 						</div>
@@ -40,3 +42,27 @@
 
 
 </div>
+@section Scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+			// Đặt giá trị đã chọn nếu có trong URL
+			var currentUrl = new URL(window.location.href);
+			var selectedOption = currentUrl.searchParams.get('sort_by');
+			if (selectedOption) {
+				$('#sort_by').val(selectedOption);
+			}
+
+			// Khi người dùng thay đổi giá trị dropdown
+			$('#sort_by').on('change', function () {
+				var sortOption = $(this).val();
+				if (sortOption) {
+					// Cập nhật URL với giá trị sort_by mới
+					currentUrl.searchParams.set('sort_by', sortOption);
+					window.location.href = currentUrl.toString();
+				}
+				return false;
+			});
+		});
+	</script>
+}
+

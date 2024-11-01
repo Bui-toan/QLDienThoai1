@@ -3,7 +3,7 @@
 @{
     ViewData["title"] = "Product Lists";    
 }
-
+<p class="alert alert-success">@TempData["message"]</p>
 <h1>List Products</h1>
 <a  asp-action="Create" asp-controller="Product" asp-area="Admin">Add Product</a>
 <table class="table table-striped">
@@ -27,7 +27,8 @@
 
                 <th scope="row">@item.IdSanPham</th>
                 <td>@item.Name</td>
-                <td>@item.Description</td>
+                <td>@Html.Raw(@item.Description)</td>
+
                 <td>@item.Price</td>
                 
                 <td>
@@ -37,7 +38,7 @@
                 <td>@item.Brand.Name</td>
                 <td>
                     <a asp-action="Edit"  class="btn btn-warning btn-sm" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">Edit</a>
-                    <a asp-action="Delete" class="btn btn-warning btn-sm" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">Delete</a>
+                    <a asp-action="Delete" class="btn btn-warning btn-sm confirmDeletion" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">Delete</a>
                 </td>
                
             </tr>

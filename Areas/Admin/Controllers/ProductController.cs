@@ -7,40 +7,40 @@ using QLDienThoai.Models;
 
 namespace QLDienThoai.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    //[Route("Product")]
-    public class ProductController : Controller
-    {
-        private readonly QldienThoaiContext _context=new QldienThoaiContext();
-        private readonly IWebHostEnvironment _environment;
-        public ProductController(QldienThoaiContext context,IWebHostEnvironment webHostEnvironment)
-        {
-            _context = context;
-            _environment = webHostEnvironment; 
-        }
+	[Area("Admin")]
+	//[Route("Product")]
+	public class ProductController : Controller
+	{
+		private readonly QldienThoaiContext _context = new QldienThoaiContext();
+		private readonly IWebHostEnvironment _environment;
+		public ProductController(QldienThoaiContext context, IWebHostEnvironment webHostEnvironment)
+		{
+			_context = context;
+			_environment = webHostEnvironment;
+		}
 
 
-        public async Task<IActionResult> Index()
-            
-        {
-          
-            return View(await _context.SanPhams.OrderByDescending(p => p.IdSanPham).Include(p => p.Categories).Include(p => p.Brand).ToListAsync());
-        }
-        [HttpGet]
-        [Route("Create")]
-        public async Task<IActionResult> Create()
-        {
-            ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name");
-            ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "BrandId", "Name");
-            return View();
-        }
+		public async Task<IActionResult> Index()
 
-        [HttpPost]
-        [Route("Create")]
-        public async Task<IActionResult> Create(SanPham product)
-        {
-            ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name", product.CategoriesId);
-            ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "BrandId", "Name", product.BrandId);
+		{
+
+			return View(await _context.SanPhams.OrderByDescending(p => p.IdSanPham).Include(p => p.Categories).Include(p => p.Brand).ToListAsync());
+		}
+		[HttpGet]
+		[Route("Create")]
+		public async Task<IActionResult> Create()
+		{
+			ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name");
+			ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "BrandId", "Name");
+			return View();
+		}
+
+		[HttpPost]
+		[Route("Create")]
+		public async Task<IActionResult> Create(SanPham product)
+		{
+			ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name", product.CategoriesId);
+			ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "BrandId", "Name", product.BrandId);
 
             if (ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
                     if (product.ImageUpload != null)
                     {
                         string upLoadsDir = Path.Combine(_environment.WebRootPath, "images");
-                        string imageName = Guid.NewGuid().ToString() + "_" + product.ImageUpload.FileName;
+                        string imageName = product.IdSanPham.ToString()+".jpg" ;
                         string imagePath = Path.Combine(upLoadsDir, imageName);
 
                         FileStream fs = new FileStream(imagePath, FileMode.Create);
@@ -66,11 +66,81 @@ namespace QLDienThoai.Areas.Admin.Controllers
                     }
                 }
                 _context.SanPhams.Add(product);
-                TempData["Success"] = " Thêm sản phẩm thành công";
+                TempData["message"] = " Thêm sản phẩm thành công";
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Product");
             }
                 return View(product);
+        }
+        [HttpGet]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit(int idSanPham)
+        {
+            SanPham product = await _context.SanPhams.FindAsync(idSanPham);
+            ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name", product.CategoriesId);
+            ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "BrandId", "Name", product.BrandId);
+            return View(product);
+        }
+        [HttpPost]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit(SanPham product)
+        {
+            ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name", product.CategoriesId);
+            ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "BrandId", "Name", product.BrandId);
+            var oldproduct = _context.SanPhams.Find(product.IdSanPham);
+            if (ModelState.IsValid)
+            {
+                product.Slug = product.Name.Replace(" ", "-");
+                var slug = await _context.SanPhams.FirstOrDefaultAsync(p => p.Slug == product.Slug);
+                if (slug != null)
+                {
+                    ModelState.AddModelError("", "Sản phẩm đã có trong database");
+                    return View(product);
+                }
+                else
+                {
+                    if (product.ImageUpload != null)
+                    {
+                        string upLoadsDir = Path.Combine(_environment.WebRootPath, "images");
+                        string imageName = product.IdSanPham.ToString() + ".jpg";
+                        string imagePath = Path.Combine(upLoadsDir, imageName);
+
+                        FileStream fs = new FileStream(imagePath, FileMode.Create);
+                        await product.ImageUpload.CopyToAsync(fs);
+                        fs.Close();
+                        oldproduct.Images = imageName;
+                    }
+                }
+                oldproduct.Name= product.Name;
+                oldproduct.Price = product.Price;
+                oldproduct.BrandId= product.BrandId;
+                oldproduct.CategoriesId = product.CategoriesId;
+                oldproduct.Description = product.Description;
+                                    
+
+                _context.SanPhams.Update(oldproduct);
+                TempData["message"] = " Cập nhật sản phẩm thành công";
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Product");
+            }
+            return View(product);
+        }
+        public async Task<IActionResult> Delete(int idSanPham)
+        {
+            SanPham product = await _context.SanPhams.FindAsync(idSanPham);
+            if (!string.Equals(product.Images, "noname.jpg")){
+                string upLoadsDir = Path.Combine(_environment.WebRootPath, "images");
+              
+                string imagePath = Path.Combine(upLoadsDir, product.Images);
+                if (System.IO.File.Exists(imagePath)) { 
+                    System.IO.File.Delete(imagePath);
+                }
+            }
+            _context.SanPhams.Remove(product);
+            await _context.SaveChangesAsync();
+            TempData["message"] = "Sản phẩm đã xóa";
+            return RedirectToAction("Index", "Product");
+            
         }
     }
 }
