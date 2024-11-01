@@ -62,7 +62,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 			entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 		});
 
-		modelBuilder.Entity<Brand>(entity =>
+		modelBuilder.Entity<Brands>(entity =>
 		{
 			entity.HasKey(e => e.BrandId).HasName("PK__Brands__DAD4F05E90ADE922");
 
