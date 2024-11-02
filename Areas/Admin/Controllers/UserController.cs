@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using QLDienThoai.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using QLDienThoai.Models.ViewModels;
+using System.Data;
 
 namespace QLDienThoai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/User")]
+    [Authorize(Roles = "Admin")]
+
     public class UserController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -22,10 +25,29 @@ namespace QLDienThoai.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            return View(await _userManager.Users.OrderByDescending(p => p.Id).ToListAsync());
+            var users = await _userManager.Users.ToListAsync();
+            var userViewModels = new List<UserViewModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var roleName = roles.FirstOrDefault();
+
+                if (roleName == null) roleName = "No Role";
+
+                userViewModels.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    RoleName = roleName
+                });
+            }
+
+            return View(userViewModels);
         }
 
 		[HttpGet]
@@ -49,23 +71,32 @@ namespace QLDienThoai.Areas.Admin.Controllers
                 {
                     var createUser = await _userManager.FindByEmailAsync(user.Email);
                     var userId = createUser.Id;
-                    var role = _roleManager.FindByIdAsync(user.RoleId);
+                    var role = await _roleManager.FindByIdAsync(user.RoleId);
 
-                    var addToRoleResult = await _userManager.AddToRoleAsync(createUser, role.Result.Name);
-                    if (!addToRoleResult.Succeeded)
+                    if (role != null)
                     {
-                        foreach (var error in createUserResult.Errors)
+                        var addToRoleResult = await _userManager.AddToRoleAsync(createUser, role.Name);
+                        if (!addToRoleResult.Succeeded)
                         {
-                            ModelState.AddModelError(string.Empty, error.Description);
+                            foreach (var error in addToRoleResult.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+                        }
+                        else
+                        {
+                            TempData["success"] = "Tạo user và chọn role thành công!";
+                            return RedirectToAction("Index", "User");
                         }
                     }
-
-                    return RedirectToAction("Index", "User");
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Role không tồn tại.");
+                    }
                 }
                 else
                 {
                     AddIdentityErrors(createUserResult);
-                    return View(user);
                 }
             }
             else
@@ -82,10 +113,12 @@ namespace QLDienThoai.Areas.Admin.Controllers
                 string errorMessage = string.Join("\n", errors);
                 return BadRequest(errorMessage);
             }
+
             var roles = await _roleManager.Roles.ToListAsync();
             ViewBag.Roles = new SelectList(roles, "Id", "Name");
             return View(user);
         }
+
 
         private void AddIdentityErrors(IdentityResult result)
         {
@@ -113,7 +146,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
             {
                 return View("Error");
             }
-            TempData["success"] = "User đã được xóa thành công";
+            TempData["success"] = "Xóa user thành công";
             return RedirectToAction("Index");
         }
 
@@ -137,44 +170,76 @@ namespace QLDienThoai.Areas.Admin.Controllers
             return View(user);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Route("Edit")]
-        public async Task<IActionResult> Edit(string id, AppUser user)
-        {
-            var existtingUser = await _userManager.FindByIdAsync(id);
-            if (existtingUser == null)
-            {
-                return NotFound();
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Route("Edit")]
+		public async Task<IActionResult> Edit(string id, AppUser user)
+		{
+			if (string.IsNullOrEmpty(id))
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                existtingUser.UserName = user.UserName;
-                existtingUser.Email = user.Email;
-                existtingUser.PhoneNumber = user.PhoneNumber;
-                existtingUser.RoleId = user.RoleId;
+			if (ModelState.IsValid)
+			{
+				var existingUser = await _userManager.FindByIdAsync(id);
+				if (existingUser == null)
+				{
+					return NotFound();
+				}
 
-                var updateUserResult = await _userManager.UpdateAsync(existtingUser);
-                if (updateUserResult.Succeeded)
-                {
-                    return RedirectToAction("Index", "User");
-                }
-                else
-                {
-                    AddIdentityErrors(updateUserResult);
-                    return View(existtingUser);
-                }
-            }
-            
-            var roles = await _roleManager.Roles.ToListAsync();
-            ViewBag.Roles = new SelectList(roles, "Id", "Name");
+				// Update basic information
+				existingUser.UserName = user.UserName;
+				existingUser.Email = user.Email;
+				existingUser.PhoneNumber = user.PhoneNumber;
 
-            TempData["error"] = "Model có lỗi!";
-            var errors = ModelState.Values.SelectMany(x => x.Errors.Select(e => e.ErrorMessage)).ToList();
-            string errorMessage = string.Join("\n", errors);
+				// Get the current roles of the user
+				var currentRoles = await _userManager.GetRolesAsync(existingUser);
 
-            return View(existtingUser);
-        }
-    }
+				// Remove current roles
+				if (currentRoles.Any())
+				{
+					var removeRolesResult = await _userManager.RemoveFromRolesAsync(existingUser, currentRoles);
+					if (!removeRolesResult.Succeeded)
+					{
+						ModelState.AddModelError("", "Có lỗi xảy ra khi xóa vai trò hiện tại của user.");
+						return View(user);
+					}
+				}
+
+				// Get the new role
+				var newRole = await _roleManager.FindByIdAsync(user.RoleId);
+				if (newRole != null)
+				{
+					var addToRoleResult = await _userManager.AddToRoleAsync(existingUser, newRole.Name);
+					if (!addToRoleResult.Succeeded)
+					{
+						ModelState.AddModelError("", "Có lỗi xảy ra khi thêm vai trò mới cho user.");
+						return View(user);
+					}
+				}
+				else
+				{
+					ModelState.AddModelError("", "Vai trò mới không tồn tại.");
+					return View(user);
+				}
+
+				// Save the changes to user data
+				var updateResult = await _userManager.UpdateAsync(existingUser);
+				if (updateResult.Succeeded)
+				{
+					TempData["success"] = "Sửa user thành công!";
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					ModelState.AddModelError("", "Có lỗi xảy ra khi cập nhật thông tin user.");
+				}
+			}
+
+			var roles = await _roleManager.Roles.ToListAsync();
+			ViewBag.Roles = new SelectList(roles, "Id", "Name");
+			return View(user);
+		}
+	}
 }

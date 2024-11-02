@@ -9,7 +9,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Role")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
 
     public class RoleController : Controller
     {
@@ -21,7 +21,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-        [Route("Index")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _roleManager.Roles.OrderByDescending(p => p.Id).ToListAsync());
@@ -42,7 +42,8 @@ namespace QLDienThoai.Areas.Admin.Controllers
             if (!_roleManager.RoleExistsAsync(role.Name).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(role.Name)).GetAwaiter().GetResult();
-            }
+				TempData["success"] = "Tạo role thành công!";
+			}
             return Redirect("Index");
         }
 
@@ -63,11 +64,11 @@ namespace QLDienThoai.Areas.Admin.Controllers
             try
             {
                 await _roleManager.DeleteAsync(role);
-                TempData["success"] = "Role deleted successfully!";
+                TempData["success"] = "Xóa role thành công!";
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while deleting the role.");
+                ModelState.AddModelError("", "Có lỗi xảy ra khi xóa role!");
             }
 
             return Redirect("Index");
@@ -112,12 +113,12 @@ namespace QLDienThoai.Areas.Admin.Controllers
                 try
                 {
                     await _roleManager.UpdateAsync(newRole);
-                    TempData["success"] = "Role deleted successfully!";
+                    TempData["success"] = "Sửa role thành công!";
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "An error occurred while updating the role.");
+                    ModelState.AddModelError("", "Có lỗi xảy ra khi sửa role!");
                 }
             }
             return View(role ?? new IdentityRole { Id = id });

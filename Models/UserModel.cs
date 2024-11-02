@@ -12,6 +12,9 @@ namespace QLDienThoai.Models
 		[Required(ErrorMessage = "Vui lòng nhập Email!"), EmailAddress]
 		public string? Email { get; set; }
 
+		[Required(ErrorMessage = "Vui lòng nhập số điện thoại!"), Phone]
+		public string? PhoneNumber { get; set; }
+
 		[DataType(DataType.Password), Required(ErrorMessage = "Vui lòng nhập Password!")]
 		public string? Password { get; set; }
 	}

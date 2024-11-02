@@ -18,8 +18,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 	// Password settings.
 	options.Password.RequireDigit = true;
 	options.Password.RequireLowercase = true;
-	options.Password.RequireNonAlphanumeric = true;
-	options.Password.RequireUppercase = true;
+	//options.Password.RequireNonAlphanumeric = true;
+	//options.Password.RequireUppercase = true;
 	options.Password.RequiredLength = 6;
 	//options.Password.RequiredUniqueChars = 1;
 

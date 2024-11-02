@@ -53,7 +53,7 @@ namespace QLDienThoai.Controllers
 		{
             if (ModelState.IsValid)
             {
-                AppUser newUser = new AppUser { UserName = user.UserName, Email = user.Email };
+                AppUser newUser = new AppUser { UserName = user.UserName, Email = user.Email, PhoneNumber = user.PhoneNumber };
                 IdentityResult result = await _userManager.CreateAsync(newUser, user.Password);
                 if (result.Succeeded)
                 {
@@ -67,5 +67,10 @@ namespace QLDienThoai.Controllers
             }
 			return View(user);
 		}
-	}
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+    }
 }
