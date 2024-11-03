@@ -44,6 +44,43 @@
 	@Html.PagedListPager(Model, page => Url.Action("Index", new { page, slug = ViewBag.Slug, sort_by = ViewBag.CurrentSort }))
 </div>
 @section Scripts {
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+	<script>
+		$(document).ready(function () {
+			// Khởi tạo slider cho khoảng giá
+			$("#slider-range").slider({
+				range: true,
+				step: 50,
+				min: 100,
+				max: 2000,
+				values: [100, 1800],
+				slide: function (event, ui) {
+					$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				}
+			});
+			$("#amount").val("$" + $("#slider-range").slider("values", 0) +
+				" - $" + $("#slider-range").slider("values", 1));
+
+			$('#btn-locgia').on('click', function (e) {
+				e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+
+				var startPrice = $("#slider-range").slider("values", 0);
+				var endPrice = $("#slider-range").slider("values", 1);
+				var sortBy = $('#sort_by').val(); // Lấy giá trị sắp xếp từ dropdown
+				var slug = '@ViewBag.Slug'; // Lấy slug từ ViewBag
+				var baseUrl = '@Url.Action("Index", "Category")'; // Lấy URL cơ bản
+
+				// Tạo URL mới với các tham số
+				var newUrl = `${baseUrl}?slug=${slug}&sort_by=${sortBy}&startprice=${startPrice}&endprice=${endPrice}`;
+
+				// Chuyển hướng đến URL mới
+				window.location.href = newUrl;
+			});
+		});
+	</script>
+
+	
 	<script type="text/javascript">
 		$(document).ready(function () {
 			// Đặt giá trị đã chọn nếu có trong URL
@@ -66,4 +103,5 @@
 		});
 	</script>
 }
+
 

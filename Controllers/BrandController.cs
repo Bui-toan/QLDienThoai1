@@ -11,11 +11,10 @@ namespace QLDienThoai.Controllers
 		{
 			_dataContext = dataContext;
 		}
-		public async Task<IActionResult> Index(string slug = "", string sort_by = "", int? page = 1)
+		public async Task<IActionResult> Index(string slug = "", string sort_by = "", int? page = 1, string startprice = "", string endprice = "")
 		{
 			// Kiểm tra xem slug có tồn tại không
-			var brand = await _dataContext.Brands
-				.FirstOrDefaultAsync(b => b.Slug == slug);
+			var brand = await _dataContext.Brands.FirstOrDefaultAsync(b => b.Slug == slug);
 
 			if (brand == null)
 			{
@@ -23,8 +22,16 @@ namespace QLDienThoai.Controllers
 			}
 
 			// Khởi tạo truy vấn IQueryable
-			var query = _dataContext.SanPhams
-				.Where(p => p.BrandId == brand.BrandId);
+			var query = _dataContext.SanPhams.Where(p => p.BrandId == brand.BrandId);
+
+			// Áp dụng bộ lọc giá nếu có
+			if (!string.IsNullOrEmpty(startprice) && !string.IsNullOrEmpty(endprice))
+			{
+				if (decimal.TryParse(startprice, out var minPrice) && decimal.TryParse(endprice, out var maxPrice))
+				{
+					query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+				}
+			}
 
 			// Áp dụng sắp xếp dựa trên tham số sort_by
 			query = sort_by switch
@@ -44,9 +51,9 @@ namespace QLDienThoai.Controllers
 
 			// Thực thi truy vấn và phân trang
 			var productsByBrand = await query.ToPagedListAsync(pageNumber, pageSize);
-
 			return View(productsByBrand);
 		}
+
 
 	}
 }
