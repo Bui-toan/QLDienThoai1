@@ -1,4 +1,6 @@
-﻿@model IEnumerable<SanPham>
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<SanPham>
+
 <div class="col-sm-3">
 	@Html.Partial("_SidebarPartial")
 </div>
@@ -37,10 +39,9 @@
 			</div>
 
 		}
+
 	</div><!--features_items-->
-
-
-
+	@Html.PagedListPager(Model, page => Url.Action("Index", new { page, slug = ViewBag.Slug, sort_by = ViewBag.CurrentSort }))
 </div>
 @section Scripts {
 	<script type="text/javascript">

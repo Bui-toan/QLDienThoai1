@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
+using X.PagedList;
 namespace QLDienThoai.Controllers
 {
 	public class BrandController : Controller
@@ -10,15 +11,42 @@ namespace QLDienThoai.Controllers
 		{
 			_dataContext = dataContext;
 		}
-		public async Task<IActionResult> Index(String Slug = "")
+		public async Task<IActionResult> Index(string slug = "", string sort_by = "", int? page = 1)
 		{
-			Brands brand = _dataContext.Brands.Where(c => c.Slug == Slug).FirstOrDefault();
+			// Kiểm tra xem slug có tồn tại không
+			var brand = await _dataContext.Brands
+				.FirstOrDefaultAsync(b => b.Slug == slug);
+
 			if (brand == null)
 			{
 				return RedirectToAction("Index");
 			}
-			var productsbyBrand = _dataContext.SanPhams.Where(p => p.BrandId == brand.BrandId);
-			return View(await productsbyBrand.OrderByDescending(p => p.CategoriesId).ToListAsync());
+
+			// Khởi tạo truy vấn IQueryable
+			var query = _dataContext.SanPhams
+				.Where(p => p.BrandId == brand.BrandId);
+
+			// Áp dụng sắp xếp dựa trên tham số sort_by
+			query = sort_by switch
+			{
+				"price_increase" => query.OrderBy(p => p.Price),
+				"price_decrease" => query.OrderByDescending(p => p.Price),
+				"price_newest" => query.OrderByDescending(p => p.IdSanPham),
+				"price_oldest" => query.OrderBy(p => p.IdSanPham),
+				_ => query.OrderByDescending(p => p.CategoriesId) // Mặc định sắp xếp theo CategoriesId giảm dần
+			};
+
+			// Thiết lập số lượng sản phẩm trên mỗi trang
+			int pageSize = 6;
+			int pageNumber = page ?? 1;
+			ViewBag.CurrentSort = sort_by;
+			ViewBag.Slug = slug;
+
+			// Thực thi truy vấn và phân trang
+			var productsByBrand = await query.ToPagedListAsync(pageNumber, pageSize);
+
+			return View(productsByBrand);
 		}
+
 	}
 }

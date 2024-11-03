@@ -14,7 +14,8 @@ namespace QLDienThoai.Controllers
 			_dataContext = context;
 		}
 
-		public async Task<IActionResult> Index(string slug = "", string sort_by = "")
+
+		public async Task<IActionResult> Index(string slug = "", string sort_by = "", int? page = 1)
 		{
 			// Kiểm tra xem slug có tồn tại không
 			var category = await _dataContext.Categories
@@ -39,12 +40,19 @@ namespace QLDienThoai.Controllers
 				_ => query.OrderByDescending(p => p.IdSanPham) // Mặc định sắp xếp theo Id giảm dần
 			};
 
-			// Thực thi truy vấn và tải dữ liệu
-			var productsByCategory = await query.ToListAsync();
+			// Thiết lập số lượng sản phẩm trên mỗi trang
+			int pageSize = 6;
+			int pageNumber = page ?? 1;
+			ViewBag.CurrentSort = sort_by;
+			ViewBag.Slug = slug;
+			// Thực thi truy vấn và phân trang
+			var productsByCategory = await query.ToPagedListAsync(pageNumber, pageSize);
 
 			return View(productsByCategory);
 		}
+
 	}
 }
+
 
 
