@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["title"] = "Contact Info";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contact</title>
+</head>
+<body>
+    <h3>List Contact</h3>
+
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Map</th>
+                <th>Logo</th>
+                <th>Phone</th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@Html.Raw(@item.Description)</td>
+                    <td>@Html.Raw(@item.Map)</td>
+                    <td><img src="~/images/404/@item.LogoImg" width="120px" height="150px" /> </td>
+                    <td>@item.Phone</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" asp-action="Edit" asp-controller="Contact">Edit</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

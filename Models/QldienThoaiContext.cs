@@ -18,7 +18,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 	public virtual DbSet<Brands> Brands { get; set; }
 
 	public virtual DbSet<Categories> Categories { get; set; }
-
+	public virtual DbSet<Contact> Contacts { get; set; }
 	public virtual DbSet<DanhGia> DanhGia { get; set; }
 
 	public virtual DbSet<Order> Orders { get; set; }
@@ -41,7 +41,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-FPHN58G4\\SQLEXPRESS;Initial Catalog=QLDienThoai;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-VGADB5H;Initial Catalog=QLDienThoai;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -85,8 +85,17 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 			entity.Property(e => e.Slug).HasMaxLength(100);
 			entity.Property(e => e.Status).HasMaxLength(50);
 		});
+        modelBuilder.Entity<Contact>(entity =>
+        {
+            entity.HasKey(e => e.Name).HasName("PK__Contact__737584F73D4DD07B");
+            entity.Property(e => e.Map).HasMaxLength(400);
+            entity.Property(e => e.Email).HasMaxLength(400);
+            entity.Property(e => e.Phone).HasMaxLength(400);
+            entity.Property(e => e.Description).HasMaxLength(400);
+			entity.Property(e => e.LogoImg).HasMaxLength(400);
+        });
 
-		modelBuilder.Entity<DanhGia>(entity =>
+        modelBuilder.Entity<DanhGia>(entity =>
 		{
 			entity.HasKey(e => e.IdDanhGia).HasName("PK__DanhGia__6C898AE12411B9D5");
 
