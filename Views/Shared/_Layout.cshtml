@@ -135,23 +135,23 @@
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a asp-action="Index" asp-controller="Home" class="active">Home</a></li>
 								<li class="dropdown">
-									<a href="#">Shop<i class="fa fa-angle-down"></i></a>
-									<ul role="menu" class="sub-menu">
-										<li><a asp-action="Index" asp-controller="Category">Categories</a></li>
-										<li><a asp-controller="Product" asp-action="Details">Product Details</a></li>
-										<li><a asp-controller="Cart" asp-action="Checkout">Checkout</a></li>
-										<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
-										<li><a>Login</a></li>
+									<a href="#">Category<i class="fa fa-angle-down"></i></a>
+									<ul role="menu" class="sub-menu ">
+										<vc:categories></vc:categories>
+@* 										 <li><a asp-controller="Product" asp-action="Details">Product Details</a></li>
+										 <li><a asp-controller="Cart" asp-action="Checkout">Checkout</a></li>
+										 <li><a asp-action="Index" asp-controller="Cart">Cart</a></li> *@
+										
 									</ul>
 								</li>
 								<li class="dropdown">
-									<a href="#">Blog<i class="fa fa-angle-down"></i></a>
+									<a href="#">Brand<i class="fa fa-angle-down"></i></a>
 									<ul role="menu" class="sub-menu">
-										<li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
+										<vc:brands></vc:brands>
 									</ul>
 								</li>
-							
+								<li><a asp-controller="Cart" asp-action="Checkout">Checkout</a></li>
+								<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
 								<li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
 							</ul>
 						</div>

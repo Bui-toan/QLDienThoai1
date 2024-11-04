@@ -8,7 +8,7 @@
 	@Html.Partial("_FilterProductsPartial")
 	<div class="features_items">
 		<!--features_items-->
-		<h2 class="title text-center">Features Items</h2>
+		<h2 class="title text-center">@ViewBag.Slug</h2>
 		@foreach (var item in Model)
 		{
 			<div class="col-sm-4">

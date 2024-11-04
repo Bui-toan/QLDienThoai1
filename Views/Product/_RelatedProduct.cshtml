@@ -1,7 +1,7 @@
 ﻿@{
     var relatedProducts = ViewBag.RelatedProducts as IEnumerable<SanPham>;
     var totalProducts = relatedProducts.Count();
-    var productsPerPage = 3;
+    var productsPerPage = 3; // Số sản phẩm mỗi trang
     var totalPages = (int)Math.Ceiling((double)totalProducts / productsPerPage);
 }
 
@@ -11,26 +11,27 @@
         {
             var productsToShow = relatedProducts.Skip(i * productsPerPage).Take(productsPerPage);
             <div class="item @(i == 0 ? "active" : "")">
-                @foreach (var relatedProduct in productsToShow)
-                {
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@relatedProduct.IdSanPham">
-                                        <div class="productinfo text-center">
+                <div class="row">
+                    <!-- Thêm div row để căn giữa các sản phẩm -->
+                    @foreach (var relatedProduct in productsToShow)
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@relatedProduct.IdSanPham">
                                             <img src="~/images/@relatedProduct.Images" alt="@relatedProduct.Name" width="100px" height="200px" />
                                             <h4>@relatedProduct.Name</h4>
                                             <h2>@relatedProduct.Price.ToString() USD</h2>
                                             <p>Danh mục : @relatedProduct.Categories.Name</p>
                                             <p>Thương hiệu : @relatedProduct.Brand.Name</p>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div> <!-- Kết thúc div row -->
             </div>
         }
     </div>
@@ -42,5 +43,6 @@
         <i class="fa fa-angle-right"></i>
     </a>
 </div>
+
 
 

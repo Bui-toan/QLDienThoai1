@@ -40,7 +40,7 @@ namespace QLDienThoai.Controllers
 				cartItem.Quantity += 1;
 			}
 			HttpContext.Session.SetJson("Cart", cart);
-			TempData["success"] = "Add item to cart successfully";
+			TempData["success"] = "Thêm sản phẩm thành công";
 			return Redirect(Request.Headers["Referer"].ToString());
 		}
 		public async Task<IActionResult> Decrease(int ProductId)
@@ -63,7 +63,7 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Decrease item quantity to cart successfully";
+			TempData["success"] = "Giảm số lượng sản phẩm thành công";
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> Inscrease(int ProductId)
@@ -86,7 +86,7 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Increase item quantity to cart successfully";
+			TempData["success"] = "Tăng số lượng sản phẩm thành công";
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> Remove(int ProductId)
@@ -101,7 +101,7 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Remove item  of cart successfully";
+			TempData["success"] = "Xóa sản phẩm thành công";
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> Clear()

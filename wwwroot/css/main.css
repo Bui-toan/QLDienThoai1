@@ -2519,5 +2519,10 @@ h2.title {
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
 }
-
+.menuform {
+	border: 1px solid;
+	margin-bottom: 35px;
+	padding-bottom: 20px;
+	padding-top: 15px;
+}
 
