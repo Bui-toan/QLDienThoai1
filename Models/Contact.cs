@@ -1,14 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLDienThoai.Models
 {
-    public class ContactModel
+    public partial class Contact
     {
-        
+
         public string? Name { get; set; }
 
-        public string Map {  get; set; }
+        public string Map { get; set; }
 
         public string Phone { get; set; }
 
@@ -20,6 +21,8 @@ namespace QLDienThoai.Models
 
         [NotMapped]
         public IFormFile ImageUpLoad { get; set; }
+
      
+
     }
 }
