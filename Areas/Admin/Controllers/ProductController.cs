@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Authorization;*/
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	//[Route("Product")]
-	/*[Authorize(Roles = "Admin")]*/
+	[Authorize(Roles = "Admin")]
 	public class ProductController : Controller
 	{
 		private readonly QldienThoaiContext _context = new QldienThoaiContext();

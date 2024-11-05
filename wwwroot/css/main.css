@@ -290,7 +290,7 @@ ul.sub-menu {
 	position: absolute;
 	top: 30px;
 	left: 0;
-	background: rgba(0, 0, 0, 0.6);
+	background: rgba(255, 255, 255, 1); /* Thay đổi màu nền thành trắng với độ trong suốt 100% */
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -302,7 +302,7 @@ ul.sub-menu {
 }
 
 .dropdown ul.sub-menu li .active{
-  color: #FDB45E;
+  color: aliceblue;
   padding-left: 0;
 }
 
@@ -316,7 +316,7 @@ ul.sub-menu {
 }
 
 .navbar-nav li ul.sub-menu li a{
-  color: #fff;
+  color: aliceblue;
 }
 
 .navbar-nav li ul.sub-menu li a:hover{

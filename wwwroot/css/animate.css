@@ -3261,3 +3261,17 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
     -o-animation-duration: 0.75s;
     animation-duration: 0.75s;
 }
+.bbbb {
+	position: absolute;
+	top: 30px;
+	left: 0;
+	background: rgba(255, 255, 255, 1); /* Thay đổi màu nền thành trắng với độ trong suốt 100% */
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 220px;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 999;
+}

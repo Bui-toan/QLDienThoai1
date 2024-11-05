@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Authorization;*/
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +10,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Route("Admin/User")]
-	/*[Authorize(Roles = "Admin")]*/
+	[Authorize(Roles = "Admin")]
 
 	public class UserController : Controller
 	{

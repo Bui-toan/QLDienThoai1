@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Authorization;*/
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
@@ -7,7 +7,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Route("Admin/Category")]
-	/*[Authorize(Roles = "Admin")]*/
+	[Authorize(Roles = "Admin")]
 	public class CategoryController : Controller
 	{
 		private readonly QldienThoaiContext _context = new QldienThoaiContext();
