@@ -41,7 +41,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-		=> optionsBuilder.UseSqlServer("Data Source=DESKTOP-HO543EC\\TOAN1;Initial Catalog=QLDienThoai4;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+		=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-FPHN58G4\\SQLEXPRESS;Initial Catalog=QLDienThoai;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
