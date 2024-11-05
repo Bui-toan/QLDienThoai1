@@ -6,7 +6,7 @@ namespace QLDienThoai.Models
 {
     public class ContactModel
     {
-        
+     
         public string? Name { get; set; }
 
         public string? Map {  get; set; }
