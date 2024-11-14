@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QLDienThoai.Models;
 
-public partial class User
+public partial class Users
 {
 	public int UserId { get; set; }
 

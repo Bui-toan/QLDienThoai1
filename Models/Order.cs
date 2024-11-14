@@ -10,8 +10,15 @@ public partial class Order
     public int? UserId { get; set; }
 
     public DateTime? CreateDate { get; set; }
+	
+	public string UserName { get; set; }
+	public string OrderCode { get; set; }
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+	public int Status { get; set; }
 
-    public virtual User? User { get; set; }
+
+
+	public virtual ICollection<OrderDetails> OrderDetails { get; set; } = new List<OrderDetails>();
+
+    public virtual	Users? User { get; set; }
 }
