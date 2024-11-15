@@ -32,5 +32,5 @@ public partial class SanPham
 
 	public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
 
-	public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+	public virtual ICollection<OrderDetails> OrderDetails { get; set; } = new List<OrderDetails>();
 }

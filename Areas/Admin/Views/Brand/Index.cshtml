@@ -1,0 +1,47 @@
+﻿@using QLDienThoai.Models
+@model IEnumerable<Brands>
+@{
+    ViewData["title"] = "Brand Lists";
+}
+<p class="alert alert-success">@TempData["message"]</p>
+<h1>List Brands</h1>
+<a asp-action="Create" asp-controller="Brand" asp-area="Admin">Add Brand</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Brand Name</th>
+            <th scope="col">Brand Description</th>
+ 
+            <th scope="col">Product SLug</th>
+            <th scope="col">Brand Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <th scope="row">@item.BrandId</th>
+                <td>@item.Name</td>
+                <td>@Html.Raw(@item.Description)</td>
+                <td>@item.Slug</td>
+                <td>
+                    @if (item.Status=="Active")
+                    {
+                        <span class="text text-success">Hiển thị</span>
+                    }
+                    else
+                    {
+                        <span class="text text-success">Ẩn </span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Brand" asp-route-idBrand="@item.BrandId">Edit</a>
+                    <a asp-action="Delete" class="btn btn-warning btn-sm" asp-controller="Brand" asp-route-idBrand="@item.BrandId">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

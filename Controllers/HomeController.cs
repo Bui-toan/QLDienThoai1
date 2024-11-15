@@ -31,9 +31,10 @@ namespace QLDienThoai.Controllers
 		{
 			return View();
 		}
-		public IActionResult Contact()
+		public async Task<IActionResult> Contact()
 		{
-			return View();
+			var contact = await _dataContext.Contacts.FirstOrDefaultAsync();
+			return View(contact);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
