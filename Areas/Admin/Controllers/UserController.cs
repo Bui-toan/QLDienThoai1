@@ -187,15 +187,12 @@ namespace QLDienThoai.Areas.Admin.Controllers
 					return NotFound();
 				}
 
-				// Update basic information
 				existingUser.UserName = user.UserName;
 				existingUser.Email = user.Email;
 				existingUser.PhoneNumber = user.PhoneNumber;
 
-				// Get the current roles of the user
 				var currentRoles = await _userManager.GetRolesAsync(existingUser);
 
-				// Remove current roles
 				if (currentRoles.Any())
 				{
 					var removeRolesResult = await _userManager.RemoveFromRolesAsync(existingUser, currentRoles);
@@ -206,7 +203,6 @@ namespace QLDienThoai.Areas.Admin.Controllers
 					}
 				}
 
-				// Get the new role
 				var newRole = await _roleManager.FindByIdAsync(user.RoleId);
 				if (newRole != null)
 				{
@@ -223,7 +219,6 @@ namespace QLDienThoai.Areas.Admin.Controllers
 					return View(user);
 				}
 
-				// Save the changes to user data
 				var updateResult = await _userManager.UpdateAsync(existingUser);
 				if (updateResult.Succeeded)
 				{
