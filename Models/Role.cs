@@ -15,5 +15,5 @@ public partial class Role
 
     public virtual ICollection<RoleClaim> RoleClaims { get; set; } = new List<RoleClaim>();
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<Users> Users { get; set; } = new List<Users>();
 }

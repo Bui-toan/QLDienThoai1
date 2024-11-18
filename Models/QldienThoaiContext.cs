@@ -23,7 +23,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 
 	public virtual DbSet<Order> Orders { get; set; }
 
-	public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+	public virtual DbSet<OrderDetails> OrderDetails { get; set; }
 
 	public virtual DbSet<Role> Roles { get; set; }
 
@@ -124,7 +124,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 				.HasConstraintName("FK__Orders__UserId__6754599E");
 		});
 
-		modelBuilder.Entity<OrderDetail>(entity =>
+		modelBuilder.Entity<OrderDetails>(entity =>
 		{
 			entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C34CF5106");
 
@@ -134,7 +134,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 			entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
 
 			entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
-				.HasForeignKey(d => d.OrderId)
+				.HasForeignKey(d => d.OrderDetailId)
 				.HasConstraintName("FK__OrderDeta__Order__6A30C649");
 
 			entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
@@ -189,7 +189,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 				.HasConstraintName("FK__SanPham__Categor__60A75C0F");
 		});
 
-		modelBuilder.Entity<User>(entity =>
+		modelBuilder.Entity<Users>(entity =>
 		{
 			entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CED85607A");
 
@@ -208,7 +208,7 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 						.HasForeignKey("RoleId")
 						.OnDelete(DeleteBehavior.ClientSetNull)
 						.HasConstraintName("FK__UserRoles__RoleI__4E88ABD4"),
-					l => l.HasOne<User>().WithMany()
+					l => l.HasOne<Users>().WithMany()
 						.HasForeignKey("UserId")
 						.OnDelete(DeleteBehavior.ClientSetNull)
 						.HasConstraintName("FK__UserRoles__UserI__4D94879B"),
