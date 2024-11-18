@@ -34,6 +34,9 @@ namespace QLDienThoai.Controllers
             var relatedProducts = await _dataContext.SanPhams
             .Where(p => p.CategoriesId == productsById.CategoriesId && p.IdSanPham != productsById.IdSanPham).ToListAsync();
             ViewBag.RelatedProducts = relatedProducts;
+            var companyProducts = await _dataContext.SanPhams
+            .Where(p => p.BrandId == productsById.BrandId && p.IdSanPham != productsById.IdSanPham).ToListAsync();
+            ViewBag.CompanyProducts = companyProducts;
             return View(productsById);
         }
     }

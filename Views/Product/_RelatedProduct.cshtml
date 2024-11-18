@@ -12,7 +12,6 @@
             var productsToShow = relatedProducts.Skip(i * productsPerPage).Take(productsPerPage);
             <div class="item @(i == 0 ? "active" : "")">
                 <div class="row">
-                    <!-- Thêm div row để căn giữa các sản phẩm -->
                     @foreach (var relatedProduct in productsToShow)
                     {
                         <div class="col-sm-4">
