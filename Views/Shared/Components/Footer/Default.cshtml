@@ -1,22 +1,55 @@
 ﻿@model Contact
 
-<div class="row">	
+<div class="row">
 
-		<div class="col-sm-3">
-			<div class="companyinfo">
-			<p><img src="~/images/404/@Model.LogoImg" width="200px" height="120px" /></p>
-			<p>@Html.Raw(@Model.Description)</p>
+	<footer id="footer">
+		<!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-shopper</h2>
+							<p>Shop bán đồ điện tử uy tín chất lương với hơn 30 năm phát triển và có nhiều chi nhánh trên toàn quốc.</p>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="single-widget">
+							<h2>Họ và tên</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><p>Nguyễn Đắc Minh</p></li>
+								<li><p>Bùi Khánh Toàn</p></li>
+								<li><p>Nguyễn Hoàng Phú</p></li>
+								<li><p>Ngô Đức Tùng</p></li>
+								<li><p>Nguyễn Tuấn Duy</p></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="single-widget">
+							<h2>Mã sinh viên</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><p>221230922</p></li>
+								<li><p>221231011</p></li>
+								<li><p>221230956</p></li>
+								<li><p>221231043</p></li>
+								<li><p>221220776</p></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							@Html.Raw(@Model.Map)
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-5 col-md-5">			
-			     @Html.Raw(@Model.Map)			
-		</div>
-		<div class="col-sm-4">
-			<div class="address">
-				<h5><b>Name: @Model.Name</b></h5>
-				<h5>Email: @Model.Email</h5>
-				<h5>@Model.Phone</h5>
-			</div>
-		</div>
+
+		
+
+		
+
+	</footer><!--/Footer-->
 	
 </div>
