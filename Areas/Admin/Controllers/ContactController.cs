@@ -9,7 +9,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Contact")]
-    
+
     public class ContactController : Controller
     {
         private readonly QldienThoaiContext _context;

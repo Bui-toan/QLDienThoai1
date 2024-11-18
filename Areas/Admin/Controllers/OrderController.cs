@@ -7,7 +7,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Route("Admin/Order")]
-	[Authorize(Roles = "Admin")]
+	//[Authorize(Roles = "Admin")]
 	public class OrderController : Controller
 	{
 		private readonly QldienThoaiContext _context = new QldienThoaiContext();
