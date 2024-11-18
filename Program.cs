@@ -8,6 +8,8 @@ var connectionString = builder.Configuration.GetConnectionString("QldienThoaiCon
 builder.Services.AddDbContext<QldienThoaiContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddScoped<ITenRespository, TenRespository>();
 // Add services to the container.
+
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
