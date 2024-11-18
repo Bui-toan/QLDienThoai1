@@ -1,0 +1,48 @@
+﻿@{
+    var companyProducts = ViewBag.CompanyProducts as IEnumerable<SanPham>;
+    var totalProducts = companyProducts.Count();
+    var productsPerPage = 3; // Số sản phẩm mỗi trang
+    var totalPages = (int)Math.Ceiling((double)totalProducts / productsPerPage); // Tổng số trang
+}
+<style>
+    #company-item-carousel {
+        margin-top: 50px; /* Điều chỉnh khoảng cách xuống */
+    }
+</style>
+<div id="company-item-carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        @for (int i = 0; i < totalPages; i++)
+        {
+            var productsToShow = companyProducts.Skip(i * productsPerPage).Take(productsPerPage); // Lấy các sản phẩm cho trang hiện tại
+            <div class="item @(i == 0 ? "active" : "")">
+               
+                    @foreach (var product in productsToShow) // Đổi tên biến từ "companyProducts" thành "product"
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@product.IdSanPham">
+                                            <img src="~/images/@product.Images" alt="@product.Name" width="100px" height="200px" />
+                                            <h4>@product.Name</h4>
+                                            <h2>@product.Price.ToString() USD</h2>
+                                            <p>Danh mục : @product.Categories.Name</p>
+                                            <p>Thương hiệu : @product.Brand.Name</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                
+            </div>
+        }
+     </div>
+     <!-- Điều khiển trượt trái/phải cho carousel -->
+    <a class="left recommended-item-control" href="#company-item-carousel" data-slide="prev">
+         <i class="fa fa-angle-left"></i>
+     </a>
+    <a class="right recommended-item-control" href="#company-item-carousel" data-slide="next">
+         <i class="fa fa-angle-right"></i>
+     </a>
+</div>
