@@ -10,9 +10,7 @@ namespace QLDienThoai.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable(
-                name: "Users",
-                newName: "User");
+            
 
             migrationBuilder.RenameColumn(
                 name: "ID_Ban_Pham",

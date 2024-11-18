@@ -46,7 +46,7 @@ namespace QLDienThoai.Controllers
 					orderDetail.Username = userEmail;
 					orderDetail.ProductId=item.ProductId;
 					orderDetail.Quantity = item.Quantity;
-					orderDetail.Price = item.Price;
+					orderDetail.Price = (decimal)item.Price;
 					orderDetail.OrderCode=ordercode;
 					_context.Add(orderDetail);
 					_context.SaveChanges();
