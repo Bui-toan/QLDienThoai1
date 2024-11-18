@@ -85,17 +85,17 @@ public partial class QldienThoaiContext : IdentityDbContext<AppUser>
 			entity.Property(e => e.Slug).HasMaxLength(100);
 			entity.Property(e => e.Status).HasMaxLength(50);
 		});
-        modelBuilder.Entity<Contact>(entity =>
-        {
-            entity.HasKey(e => e.Name).HasName("PK__Contact__737584F73D4DD07B");
-            entity.Property(e => e.Map).HasMaxLength(400);
-            entity.Property(e => e.Email).HasMaxLength(400);
-            entity.Property(e => e.Phone).HasMaxLength(400);
-            entity.Property(e => e.Description).HasMaxLength(400);
+		modelBuilder.Entity<Contact>(entity =>
+		{
+			entity.HasKey(e => e.Name).HasName("PK__Contact__737584F73D4DD07B");
+			entity.Property(e => e.Map).HasMaxLength(400);
+			entity.Property(e => e.Email).HasMaxLength(400);
+			entity.Property(e => e.Phone).HasMaxLength(400);
+			entity.Property(e => e.Description).HasMaxLength(400);
 			entity.Property(e => e.LogoImg).HasMaxLength(400);
-        });
+		});
 
-        modelBuilder.Entity<DanhGia>(entity =>
+		modelBuilder.Entity<DanhGia>(entity =>
 		{
 			entity.HasKey(e => e.IdDanhGia).HasName("PK__DanhGia__6C898AE12411B9D5");
 
