@@ -70,25 +70,46 @@ namespace QLDienThoai.Controllers
 			return View();
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> Create(UserModel user)
-		{
+        [HttpPost]
+        public async Task<IActionResult> Create(UserModel user)
+        {
             if (ModelState.IsValid)
             {
-                AppUser newUser = new AppUser { UserName = user.UserName, Email = user.Email, PhoneNumber = user.PhoneNumber };
+                AppUser newUser = new AppUser
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber
+                };
+
                 IdentityResult result = await _userManager.CreateAsync(newUser, user.Password);
+
                 if (result.Succeeded)
                 {
-                    TempData["success"] = "Tạo user thành công!";
-                    return Redirect("/account/login");
+                    // Gán role "User" cho tài khoản mới
+                    var roleResult = await _userManager.AddToRoleAsync(newUser, "User");
+                    if (roleResult.Succeeded)
+                    {
+                        TempData["success"] = "Tạo user thành công!";
+                        return Redirect("/account/login");
+                    }
+
+                    // Xử lý lỗi nếu gán role thất bại
+                    foreach (IdentityError error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
-                foreach(IdentityError error in result.Errors)
+
+                // Xử lý lỗi nếu tạo user thất bại
+                foreach (IdentityError error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
-			return View(user);
-		}
+
+            return View(user);
+        }
 
         public IActionResult AccessDenied()
         {
