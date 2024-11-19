@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
@@ -8,8 +7,8 @@ using QLDienThoai.Models;
 namespace QLDienThoai.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Route("Product")]
-	[Authorize(Roles = "Admin")]
+	[Route("Admin")]
+	//[Authorize(Roles = "Admin")]
 	public class ProductController : Controller
 	{
 		private readonly QldienThoaiContext _context = new QldienThoaiContext();
@@ -20,7 +19,8 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			_environment = webHostEnvironment;
 		}
 
-
+		[HttpGet]
+		[Route("")]
 		public async Task<IActionResult> Index()
 
 		{
@@ -126,6 +126,8 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			}
 			return View(product);
 		}
+
+		[Route("Delete/{idSanPham:int}")]
 		public async Task<IActionResult> Delete(int idSanPham)
 		{
 			SanPham product = await _context.SanPhams.FindAsync(idSanPham);
@@ -145,5 +147,6 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			return RedirectToAction("Index", "Product");
 
 		}
+
 	}
 }

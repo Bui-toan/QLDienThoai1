@@ -76,5 +76,90 @@
 }
 
 
+@* Thêm sản phẩm bằng API *@
+<a onclick="showHideDiveInsertData('displayForm'); return false;" class="btn btn-primary">Thêm sản phẩm bằng API</a>
 
+<div id="displayForm">
+    <form id="formAddProduct" method="post">
+        <div class="form-group">
+            <label class="control-label">Mã sản phẩm</label>
+            <input type="text" class="form-control" id="IdSanPham" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="Name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Description</label>
+            <input type="text" class="form-control" id="Description" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Price</label>
+            <input type="text" class="form-control" id="Price" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">BrandId</label>
+            <input type="text" class="form-control" id="BrandId" />
+        </div>
 
+        <div class="form-group">
+            <label class="control-label">CategoriesId</label>
+            <input id="CategoriesId" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Images</label>
+            <input type="file" class="form-control-file" id="ImageUpload" />
+            <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            <img id="Images" class="pt-2" />
+        </div>
+
+        <div class="form-group">
+            <input onclick="addANewProduct('https://localhost:7221/api/productapi'); return false;" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function addANewProduct(apiUrl) {
+           // Thu thập dữ liệu từ form
+           var formData = new FormData();
+           formData.append('IdSanPham', $('#IdSanPham').val());
+           formData.append('Name', $('#Name').val());
+           formData.append('Description', $('#Description').val());
+           formData.append('Price', $('#Price').val());
+           formData.append('BrandId', $('#BrandId').val());
+           formData.append('CategoriesId', $('#CategoriesId').val());
+
+           // Lấy file hình ảnh nếu có
+           var imageFile = $('#ImageUpload')[0].files[0];
+           if (imageFile) {
+               formData.append('ImageUpload', imageFile);
+           }
+
+           // Gửi yêu cầu AJAX
+           $.ajax({
+               type: 'POST',
+               url: apiUrl,
+               data: formData,
+               processData: false,  // Không cần jQuery xử lý dữ liệu
+               contentType: false,  // Không đặt contentType, vì nó sẽ tự động được thiết lập khi gửi FormData
+               success: function (phanHoi) {
+                   alert('Thêm sản phẩm thành công!');
+                   window.location.href = 'https://localhost:7044/admin/product/index'; // Chuyển hướng sau khi thêm thành công
+               },
+               error: function (loi) {
+                   console.error('Lỗi khi thêm sản phẩm:', loi);
+                   alert('Có lỗi xảy ra khi thêm sản phẩm. Vui lòng thử lại.');
+               }
+           });
+       }
+
+       function showHideDiveInsertData(activeDiv) {
+           if ($(document.getElementById(activeDiv)).is(":visible")) {
+               $(document.getElementById(activeDiv)).hide('slow');
+           }
+           else {
+               $(document.getElementById(activeDiv)).show('slow');
+           }
+       }
+</script>

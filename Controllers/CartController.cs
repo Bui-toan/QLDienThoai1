@@ -26,6 +26,8 @@ namespace QLDienThoai.Controllers
 		{
 			return View("~/Views/Checkout/Index.cshtml");
 		}
+
+
 		public async Task<IActionResult> Add(int IdSanPham)
 		{
 			SanPham product = await _dataContext.SanPhams.FindAsync(IdSanPham);
@@ -43,6 +45,8 @@ namespace QLDienThoai.Controllers
 			TempData["success"] = "Thêm sản phẩm thành công";
 			return Redirect(Request.Headers["Referer"].ToString());
 		}
+
+		[HttpPost]
 		public async Task<IActionResult> Decrease(int ProductId)
 		{
 			List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
@@ -63,9 +67,12 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Giảm số lượng sản phẩm thành công";
-			return RedirectToAction("Index");
+
+			/*TempData["success"] = "Giảm số lượng sản phẩm thành công";*/
+			return PartialView("_CartPartial", GetCartViewModel(cart));
 		}
+
+		[HttpPost]
 		public async Task<IActionResult> Inscrease(int ProductId)
 		{
 			List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
@@ -86,9 +93,11 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Tăng số lượng sản phẩm thành công";
-			return RedirectToAction("Index");
+			/*TempData["success"] = "Tăng số lượng sản phẩm thành công";*/
+			return PartialView("_CartPartial", GetCartViewModel(cart));
 		}
+
+		[HttpPost]
 		public async Task<IActionResult> Remove(int ProductId)
 		{
 			List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
@@ -101,14 +110,28 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Xóa sản phẩm thành công";
-			return RedirectToAction("Index");
+			/*		TempData["success"] = "Xóa sản phẩm thành công";*/
+			return PartialView("_CartPartial", GetCartViewModel(cart));
 		}
+
+		[HttpPost]
 		public async Task<IActionResult> Clear()
 		{
 			HttpContext.Session.Remove("Cart");
-			return RedirectToAction("Index");
+			/*TempData["successMessage"] = "Đã xóa tất cả sản phẩm khỏi giỏ hàng";*/
+			return PartialView("_CartPartial", new CartItemViewModel());
 		}
+
+		private CartItemViewModel GetCartViewModel(List<CartItemModel> cartItems)
+		{
+			return new CartItemViewModel
+			{
+				CartItems = cartItems,
+				GrandTotal = cartItems.Sum(x => x.Quantity * x.Price)
+			};
+		}
+
+
 
 	}
 }

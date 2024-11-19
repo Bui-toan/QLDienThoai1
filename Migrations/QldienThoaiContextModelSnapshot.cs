@@ -298,10 +298,6 @@ namespace QLDienThoai.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LogoImg")
                         .IsRequired()
                         .HasMaxLength(400)
@@ -364,8 +360,19 @@ namespace QLDienThoai.Migrations
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("OrderCodes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Statuss")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId")
                         .HasName("PK__Orders__C3905BCF7EAABD66");
@@ -375,12 +382,15 @@ namespace QLDienThoai.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("QLDienThoai.Models.OrderDetail", b =>
+            modelBuilder.Entity("QLDienThoai.Models.OrderDetails", b =>
                 {
                     b.Property<int>("OrderDetailId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<string>("OrderCodes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Price")
@@ -394,8 +404,6 @@ namespace QLDienThoai.Migrations
 
                     b.HasKey("OrderDetailId")
                         .HasName("PK__OrderDet__D3B9D36C34CF5106");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -696,11 +704,13 @@ namespace QLDienThoai.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("QLDienThoai.Models.OrderDetail", b =>
+            modelBuilder.Entity("QLDienThoai.Models.OrderDetails", b =>
                 {
                     b.HasOne("QLDienThoai.Models.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("OrderDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("FK__OrderDeta__Order__6A30C649");
 
                     b.HasOne("QLDienThoai.Models.SanPham", "Product")

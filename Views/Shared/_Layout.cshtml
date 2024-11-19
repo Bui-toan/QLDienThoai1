@@ -24,6 +24,8 @@
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/images/ico/apple-touch-icon-114-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/images/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" href="~/images/ico/apple-touch-icon-57-precomposed.png">
+
+	
 </head><!--/head-->
 
 <body>
@@ -76,10 +78,10 @@
 									}
 									else
 									{
-										<li><a asp-action="Index" asp-controller="Account"><i class="fa fa-user"></i> Account</a></li>
-										<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+										<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+										
 										<li><a asp-action="Index" asp-controller="Cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-										<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+										
 									}
 									<li><a href="#"><i class="fa fa-users"></i>Hi, @User.Identity.Name</a></li>
 									<li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-unlock"></i>Logout</a></li>
@@ -127,7 +129,7 @@
 										<vc:brands></vc:brands>
 									</ul>
 								</li>
-								<li><a asp-controller="Cart" asp-action="Checkout">Checkout</a></li>
+								
 								<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
 								<li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
 							</ul>
@@ -159,45 +161,59 @@
 						</ol>
 
 						<div class="carousel-inner">
+							<!-- Item 1 -->
 							<div class="item active">
 								<div class="col-sm-6">
 									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+									<h2>HP Pavilion 14</h2>
+									<p>Kiểu dáng thanh lịch, sang trọng. Hiệu năng mạnh mẽ. Màn hình 14 inch sắc nét.</p>
+									<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="4">
+										<button type="button" class="btn btn-default get">Get it now</button>
+									</a>
 								</div>
 								<div class="col-sm-6">
-									<img src="~/images/home/girl1.jpg" class="girl img-responsive" alt="" />
-									<img src="~/images/home/pricing.png" class="pricing" alt="" />
-								</div>
-							</div>
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>100% Responsive Design</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="~/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-									<img src="~/images/home/pricing.png" class="pricing" alt="" />
+									<img src="~/images/4.jpg" class="girl img-responsive" alt="" />
 								</div>
 							</div>
 
+							<!-- Item 2 -->
 							<div class="item">
 								<div class="col-sm-6">
 									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free Ecommerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+									<h2>HP Envy 15</h2>
+									<p>
+										Thiết kế sang trọng, thời thượng với mặt lưng nhôm cùng trọng lượng chỉ 1.55kg.
+										Chất lượng hiển thị hàng đầu - màn hình 14.2 inch tấm nền retina.
+									</p>
+									<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="2">
+										<button type="button" class="btn btn-default get">Get it now</button>
+									</a>
 								</div>
 								<div class="col-sm-6">
-									<img src="~/images/home/girl3.jpg" class="girl img-responsive" alt="" />
-									<img src="~/images/home/pricing.png" class="pricing" alt="" />
+									<img src="~/images/2.jpg" class="girl img-responsive" alt="" />
+									
 								</div>
 							</div>
 
+							<!-- Item 3 -->
+							<div class="item">
+								<div class="col-sm-6">
+									<h1><span>E</span>-SHOPPER</h1>
+									<h2>Dell XPS 13</h2>
+									<p>
+										Sở hữu thiết kế cực kỳ sang chảnh với nhôm nguyên khối vô cùng chắc chắn.
+										Vi xử lý Intel Core i5-1135G7 đi kèm với card đồ hoạ Intel Iris Xe giúp bạn chỉnh sửa ảnh hay video cơ bản một cách dễ dàng.
+									</p>
+									<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="1">
+										<button type="button" class="btn btn-default get">Get it now</button>
+									</a>
+								</div>
+								<div class="col-sm-6">
+									<img src="~/images/1.jpg" class="girl img-responsive" alt="" />
+								</div>
+							</div>
 						</div>
+
 
 						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
 							<i class="fa fa-angle-left"></i>
@@ -227,73 +243,6 @@
 	<footer id="footer">
 		<!--Footer-->
 		@Html.Partial("_FooterPartial")
-
-		 @* <div class="footer-widget">
-		 	<div class="container">
-		 		<div class="row">
-		 			<div class="col-sm-2">
-		 				<div class="single-widget">
-		 					<h2>Service</h2>
-		 					<ul class="nav nav-pills nav-stacked">
-		 						<li><a href="#">Online Help</a></li>
-		 						<li><a href="#">Contact Us</a></li>
-		 						<li><a href="#">Order Status</a></li>
-		 						<li><a href="#">Change Location</a></li>
-		 						<li><a href="#">FAQ’s</a></li>
-		 					</ul>
-		 				</div>
-		 			</div>
-		 			<div class="col-sm-2">
-		 				<div class="single-widget">
-		 					<h2>Quock Shop</h2>
-		 					<ul class="nav nav-pills nav-stacked">
-		 						<li><a href="#">T-Shirt</a></li>
-		 						<li><a href="#">Mens</a></li>
-		 						<li><a href="#">Womens</a></li>
-		 						<li><a href="#">Gift Cards</a></li>
-		 						<li><a href="#">Shoes</a></li>
-		 					</ul>
-		 				</div>
-		 			</div>
-		 			<div class="col-sm-2">
-		 				<div class="single-widget">
-		 					<h2>Policies</h2>
-		 					<ul class="nav nav-pills nav-stacked">
-		 						<li><a href="#">Terms of Use</a></li>
-		 						<li><a href="#">Privecy Policy</a></li>
-		 						<li><a href="#">Refund Policy</a></li>
-		 						<li><a href="#">Billing System</a></li>
-		 						<li><a href="#">Ticket System</a></li>
-		 					</ul>
-		 				</div>
-		 			</div>
-		 			<div class="col-sm-2">
-		 				<div class="single-widget">
-		 					<h2>About Shopper</h2>
-		 					<ul class="nav nav-pills nav-stacked">
-		 						<li><a href="#">Company Information</a></li>
-		 						<li><a href="#">Careers</a></li>
-		 						<li><a href="#">Store Location</a></li>
-		 						<li><a href="#">Affillate Program</a></li>
-		 						<li><a href="#">Copyright</a></li>
-		 					</ul>
-		 				</div>
-		 			</div>
-		 			<div class="col-sm-3 col-sm-offset-1">
-		 				<div class="single-widget">
-		 					<h2>About Shopper</h2>
-		 					<form action="#" class="searchform">
-		 						<input type="text" placeholder="Your email address" />
-		 						<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-		 						<p>Get the most recent updates from <br />our site and be updated your self...</p>
-		 					</form>
-		 				</div>
-		 			</div>
-
-		 		</div>
-		 	</div>
-		 </div> *@
-
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
