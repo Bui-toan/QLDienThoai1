@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
@@ -8,9 +7,9 @@ using QLDienThoai.Models;
 namespace QLDienThoai.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-    [Route("Admin/[controller]/[action]")]
-    //[Authorize(Roles = "Admin")]
-    public class ProductController : Controller
+	[Route("Admin")]
+	//[Authorize(Roles = "Admin")]
+	public class ProductController : Controller
 	{
 		private readonly QldienThoaiContext _context = new QldienThoaiContext();
 		private readonly IWebHostEnvironment _environment;
@@ -75,8 +74,8 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			return View(product);
 		}
 		[HttpGet]
-        [Route("Edit/{idSanPham:int}")]
-        public async Task<IActionResult> Edit(int idSanPham)
+		[Route("Edit")]
+		public async Task<IActionResult> Edit(int idSanPham)
 		{
 			SanPham product = await _context.SanPhams.FindAsync(idSanPham);
 			ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "CategoriesId", "Name", product.CategoriesId);
@@ -128,8 +127,8 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			return View(product);
 		}
 
-        [Route("Delete/{idSanPham:int}")]
-        public async Task<IActionResult> Delete(int idSanPham)
+		[Route("Delete/{idSanPham:int}")]
+		public async Task<IActionResult> Delete(int idSanPham)
 		{
 			SanPham product = await _context.SanPhams.FindAsync(idSanPham);
 			if (!string.Equals(product.Images, "noname.jpg"))
@@ -149,5 +148,5 @@ namespace QLDienThoai.Areas.Admin.Controllers
 
 		}
 
-    }
+	}
 }

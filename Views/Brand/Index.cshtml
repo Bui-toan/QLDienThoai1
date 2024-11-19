@@ -18,7 +18,7 @@
 						<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">
 							<div class="productinfo text-center">
 								<img src="~/images/@item.Images" alt="@item.Name" height="200px" weight="100px" />
-								<h2>@item.Name</h2>
+								<h4>@item.Name</h4>
 								<h2>@item.Price.ToString() USD</h2>
 
 								<p>Danh mục : @item.Categories.Name</p>
@@ -29,12 +29,7 @@
                           </a>
 						</div>
 					
-					<div class="choose">
-						<ul class="nav nav-pills nav-justified">
-							<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-							<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-						</ul>
-					</div>
+					
 				</div>
 			</div>
 
@@ -53,8 +48,8 @@
 				range: true,
 				step: 50,
 				min: 100,
-				max: 2000,
-				values: [100, 1800],
+				max: 3000,
+				values: [100, 3000],
 				slide: function (event, ui) {
 					$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
 				}

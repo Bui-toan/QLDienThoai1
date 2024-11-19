@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SanPham>
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<SanPham>
 @{
 	ViewData["Title"] = ViewBag.Keyword;
 }
@@ -7,6 +8,7 @@
 </div>
 
 <div class="col-sm-9 padding-right">
+	@Html.Partial("_FilterProductsPartial")
 	<div class="features_items">
 		<!--features_items-->
 		<h2 class="title text-center">@ViewBag.KeyWord</h2>
@@ -19,7 +21,7 @@
 						<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">
 							<div class="productinfo text-center">
 								<img src="~/images/@item.Images" alt="@item.Name" width="100%" />
-								<h2>@item.Name</h2>
+								<h4>@item.Name</h4>
 								<h2>$@item.Price.ToString() USD</h2>
 								<p>Danh mục : @item.Categories.Name</p>
 								<p>Thương hiệu : @item.Brand.Name</p>
@@ -28,18 +30,85 @@
 						</a>
 					</div>
 
-					<div class="choose">
-						<ul class="nav nav-pills nav-justified">
-							<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-							<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-						</ul>
-					</div>
+					
 				</div>
 			</div>
 
 		}
 	</div><!--features_items-->
-
-
-
 </div>
+<div class="pagination-area">
+	<ul class="pagination">
+	  @Html.PagedListPager(
+			Model,
+			page => Url.Action("Search", new
+			{
+				page,
+				searchTerm = ViewBag.Keyword,
+				startprice = ViewBag.StartPrice,
+				endprice = ViewBag.EndPrice,
+				sort_by = ViewBag.SortBy
+			}))
+	</ul>
+</div>
+@section Scripts {
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+	<script>
+		$(document).ready(function () {
+			// Khởi tạo slider cho khoảng giá
+			$("#slider-range").slider({
+				range: true,
+				step: 50,
+				min: 100,
+				max: 3000,
+				values: [100, 3000],
+				slide: function (event, ui) {
+					$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				}
+			});
+			$("#amount").val("$" + $("#slider-range").slider("values", 0) +
+				" - $" + $("#slider-range").slider("values", 1));
+
+			$('#btn-locgia').on('click', function (e) {
+				e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+
+				var startPrice = $("#slider-range").slider("values", 0);
+				var endPrice = $("#slider-range").slider("values", 1);
+				var sortBy = $('#sort_by').val(); // Lấy giá trị sắp xếp từ dropdown
+				var slug = '@ViewBag.KeyWord'; // Lấy slug từ ViewBag
+				var baseUrl = '@Url.Action("Search", "Product")'; // Đảm bảo thứ tự đúng
+
+
+				// Tạo URL mới với các tham số
+				var newUrl = `${baseUrl}?searchTerm=${slug}&sort_by=${sortBy}&startprice=${startPrice}&endprice=${endPrice}`;
+
+				// Chuyển hướng đến URL mới
+				window.location.href = newUrl;
+			});
+		});
+	</script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			// Đặt giá trị đã chọn nếu có trong URL
+			var currentUrl = new URL(window.location.href);
+			var selectedOption = currentUrl.searchParams.get('sort_by');
+			if (selectedOption) {
+				$('#sort_by').val(selectedOption);
+			}
+
+			// Khi người dùng thay đổi giá trị dropdown
+			$('#sort_by').on('change', function () {
+				var sortOption = $(this).val();
+				if (sortOption) {
+					// Cập nhật URL với giá trị sort_by mới
+					currentUrl.searchParams.set('sort_by', sortOption);
+					window.location.href = currentUrl.toString();
+				}
+				return false;
+			});
+		});
+	</script>
+}

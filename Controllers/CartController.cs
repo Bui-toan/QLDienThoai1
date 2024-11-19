@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using QLDienThoai.Models;
 using QLDienThoai.Models.ViewModel;
 using QLDienThoai.Respository;
@@ -29,7 +27,7 @@ namespace QLDienThoai.Controllers
 			return View("~/Views/Checkout/Index.cshtml");
 		}
 
-		
+
 		public async Task<IActionResult> Add(int IdSanPham)
 		{
 			SanPham product = await _dataContext.SanPhams.FindAsync(IdSanPham);
@@ -70,7 +68,7 @@ namespace QLDienThoai.Controllers
 				HttpContext.Session.SetJson("Cart", cart);
 			}
 
-			TempData["success"] = "Giảm số lượng sản phẩm thành công";
+			/*TempData["success"] = "Giảm số lượng sản phẩm thành công";*/
 			return PartialView("_CartPartial", GetCartViewModel(cart));
 		}
 
@@ -95,7 +93,7 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Tăng số lượng sản phẩm thành công";
+			/*TempData["success"] = "Tăng số lượng sản phẩm thành công";*/
 			return PartialView("_CartPartial", GetCartViewModel(cart));
 		}
 
@@ -112,7 +110,7 @@ namespace QLDienThoai.Controllers
 			{
 				HttpContext.Session.SetJson("Cart", cart);
 			}
-			TempData["success"] = "Xóa sản phẩm thành công";
+			/*		TempData["success"] = "Xóa sản phẩm thành công";*/
 			return PartialView("_CartPartial", GetCartViewModel(cart));
 		}
 
@@ -120,7 +118,7 @@ namespace QLDienThoai.Controllers
 		public async Task<IActionResult> Clear()
 		{
 			HttpContext.Session.Remove("Cart");
-			TempData["successMessage"] = "Đã xóa tất cả sản phẩm khỏi giỏ hàng";
+			/*TempData["successMessage"] = "Đã xóa tất cả sản phẩm khỏi giỏ hàng";*/
 			return PartialView("_CartPartial", new CartItemViewModel());
 		}
 
@@ -133,7 +131,7 @@ namespace QLDienThoai.Controllers
 			};
 		}
 
-		
-		
+
+
 	}
 }
