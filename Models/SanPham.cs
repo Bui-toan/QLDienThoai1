@@ -30,7 +30,5 @@ public partial class SanPham
 
 	public virtual Categories? Categories { get; set; }
 
-	public virtual ICollection<DanhGia> DanhGia { get; set; } = new List<DanhGia>();
-
 	public virtual ICollection<OrderDetails> OrderDetails { get; set; } = new List<OrderDetails>();
 }
