@@ -1,5 +1,6 @@
 ﻿@using QLDienThoai.Models
-@model IEnumerable<SanPham>
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<SanPham>
 @{
     ViewData["title"] = "Product Lists";    
 }
@@ -45,3 +46,8 @@
         }
     </tbody>
 </table>
+<div class="pagination-area">
+    <ul class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+    </ul>
+</div>
