@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Brands>
 @foreach (var item in Model)
 {
-	<div class="panel ">
+	<div class="panel">
 		<div class="panel-body">
 			<h4 class="panel-title"><a asp-action="Index" asp-controller="Brand" asp-route-Slug="@item.Slug" >@item.Name</a></h4>
 		</div>

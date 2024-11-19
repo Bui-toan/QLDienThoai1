@@ -1,0 +1,107 @@
+﻿@model UserModel
+
+@{
+    ViewData["Title"] = "User Information";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="user-info">
+    <h3>Welcome, @Model.UserName!</h3>
+
+    <table class="table">
+        <tr>
+            <th>FullName</th>
+            <td>
+                @if (string.IsNullOrEmpty(Model.FullName))
+                {
+                    <span class="placeholder">Chưa có thông tin</span>
+                }
+                else
+                {
+                    @Model.FullName
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>
+                @if (string.IsNullOrEmpty(Model.Email))
+                {
+                    <span class="placeholder">Chưa có thông tin</span>
+                }
+                else
+                {
+                    @Model.Email
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>
+                @if (string.IsNullOrEmpty(Model.PhoneNumber))
+                {
+                    <span class="placeholder">Chưa có thông tin</span>
+                }
+                else
+                {
+                    @Model.PhoneNumber
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>
+                @if (string.IsNullOrEmpty(Model.Address))
+                {
+                    <span class="placeholder">Chưa có thông tin</span>
+                }
+                else
+                {
+                    @Model.Address
+                }
+            </td>
+        </tr>
+    </table>
+
+    <a asp-action="Edit" asp-controller="Account" class="btn btn-primary">Cập nhật thông tin</a>
+</div>
+
+<style>
+    .user-info {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+    .placeholder {
+        color: #888;
+        font-style: italic;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 14px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 5px;
+    }
+</style>

@@ -20,6 +20,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Route("Index")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _roleManager.Roles.OrderByDescending(p => p.Id).ToListAsync());

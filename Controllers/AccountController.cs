@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using QLDienThoai.Models;
@@ -16,6 +17,27 @@ namespace QLDienThoai.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
         }
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> Index()
+		{
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				return RedirectToAction("Login");
+			}
+
+			var userModel = new UserModel
+			{
+                UserName = user.UserName,
+				FullName = user.FullName,
+				PhoneNumber = user.PhoneNumber,
+				Email = user.Email,
+				Address = user.Address 
+			};
+
+			return View(userModel);
+		}
 
         public IActionResult Login(string returnUrl)
         {
@@ -71,6 +93,61 @@ namespace QLDienThoai.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> Edit()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var userModel = new UserModel
+            {
+                UserName = user.UserName,
+                FullName = user.FullName,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                Address = user.Address
+            };
+
+            return View(userModel);
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserModel model)
+        {
+            //if (ModelState.IsValid)
+            //{
+				var user = await _userManager.GetUserAsync(User);
+
+				if (user == null)
+				{
+					return RedirectToAction("Login");
+				}
+
+				user.FullName = model.FullName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Email = model.Email;
+                user.Address = model.Address;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    TempData["success"] = "Thông tin đã được cập nhật thành công!";
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            //}
+            return View(model);
         }
     }
 }

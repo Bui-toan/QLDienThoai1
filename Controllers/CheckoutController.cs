@@ -18,10 +18,33 @@ namespace QLDienThoai.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
-            var userEmail = User.FindFirstValue(ClaimTypes.Email);
-            if (userEmail == null)
+            // Kiểm tra người dùng đã đăng nhập chưa
+            if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
+            }
+
+            // Lấy tên đăng nhập của người dùng hiện tại từ Claims
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Truy vấn bảng User để lấy email của người dùng
+            var user = _context.Users.SingleOrDefault(u => u.UserName == userName);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var userEmail = user.Email;
+
+            // Kiểm tra xem người dùng đã có địa chỉ và số điện thoại chưa
+            if (string.IsNullOrEmpty(user.Address) || string.IsNullOrEmpty(user.PhoneNumber))
+            {
+                TempData["error"] = "Vui lòng cập nhật địa chỉ và số điện thoại trước khi checkout.";
+                return RedirectToAction("Index", "Account");
             }
 
             // Lấy danh sách sản phẩm từ giỏ hàng
