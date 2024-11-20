@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QLDienThoai.Models;
 
 namespace QLDienThoai.Areas.Admin.Controllers
 {
@@ -11,11 +12,12 @@ namespace QLDienThoai.Areas.Admin.Controllers
 
 	public class RoleController : Controller
 	{
-		//private readonly QldienThoaiContext db;
+		private readonly UserManager<AppUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
 
-		public RoleController(RoleManager<IdentityRole> roleManager)
+		public RoleController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
+			_userManager = userManager;
 			_roleManager = roleManager;
 		}
 
@@ -54,6 +56,8 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			{
 				return NotFound();
 			}
+
+			// Tìm role cần xóa
 			var role = await _roleManager.FindByIdAsync(id);
 			if (role == null)
 			{
@@ -62,6 +66,15 @@ namespace QLDienThoai.Areas.Admin.Controllers
 
 			try
 			{
+				// Lấy danh sách người dùng có role này
+				var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
+				if (usersInRole.Any())
+				{
+					ModelState.AddModelError("", $"Không thể xóa role '{role.Name}' vì vẫn còn người dùng liên kết!");
+					return View("Index", await _roleManager.Roles.OrderByDescending(p => p.Id).ToListAsync());
+				}
+
+				// Xóa role nếu không có người dùng nào liên kết
 				await _roleManager.DeleteAsync(role);
 				TempData["success"] = "Xóa role thành công!";
 			}
@@ -70,7 +83,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 				ModelState.AddModelError("", "Có lỗi xảy ra khi xóa role!");
 			}
 
-			return Redirect("Index");
+			return RedirectToAction("Index");
 		}
 
 		[HttpGet]

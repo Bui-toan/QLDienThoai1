@@ -149,10 +149,10 @@
 	</header><!--/header-->
 
 	<section id="slider">
-		<!--slider-->
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-10">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
@@ -163,57 +163,25 @@
 						<div class="carousel-inner">
 							<!-- Item 1 -->
 							<div class="item active">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>HP Pavilion 14</h2>
-									<p>Kiểu dáng thanh lịch, sang trọng. Hiệu năng mạnh mẽ. Màn hình 14 inch sắc nét.</p>
-									<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="4">
-										<button type="button" class="btn btn-default get">Get it now</button>
-									</a>
-								</div>
-								<div class="col-sm-6">
-									<img src="~/images/4.jpg" class="girl img-responsive" alt="" />
-								</div>
+								<a href="~/Category?Slug=smartphone">
+									<img src="~/images/banner1.jpg" class="girl img-responsive hover-effect" alt="" />
+								</a>
 							</div>
 
 							<!-- Item 2 -->
 							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>HP Envy 15</h2>
-									<p>
-										Thiết kế sang trọng, thời thượng với mặt lưng nhôm cùng trọng lượng chỉ 1.55kg.
-										Chất lượng hiển thị hàng đầu - màn hình 14.2 inch tấm nền retina.
-									</p>
-									<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="2">
-										<button type="button" class="btn btn-default get">Get it now</button>
-									</a>
-								</div>
-								<div class="col-sm-6">
-									<img src="~/images/2.jpg" class="girl img-responsive" alt="" />
-									
-								</div>
+								<a href="~/Category?Slug=pc">
+									<img src="~/images/banner2.jpg" class="girl img-responsive hover-effect" alt="" />
+								</a>
 							</div>
 
 							<!-- Item 3 -->
 							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Dell XPS 13</h2>
-									<p>
-										Sở hữu thiết kế cực kỳ sang chảnh với nhôm nguyên khối vô cùng chắc chắn.
-										Vi xử lý Intel Core i5-1135G7 đi kèm với card đồ hoạ Intel Iris Xe giúp bạn chỉnh sửa ảnh hay video cơ bản một cách dễ dàng.
-									</p>
-									<a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="1">
-										<button type="button" class="btn btn-default get">Get it now</button>
-									</a>
-								</div>
-								<div class="col-sm-6">
-									<img src="~/images/1.jpg" class="girl img-responsive" alt="" />
-								</div>
+								<a href="~/Category?Slug=macbook">
+									<img src="~/images/banner3.jpg" class="girl img-responsive hover-effect" alt="" />
+								</a>
 							</div>
 						</div>
-
 
 						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
 							<i class="fa fa-angle-left"></i>
@@ -222,11 +190,10 @@
 							<i class="fa fa-angle-right"></i>
 						</a>
 					</div>
-
 				</div>
 			</div>
 		</div>
-	</section><!--/slider-->
+	</section>
 
 	<section>
 		<div class="container">
@@ -267,3 +234,20 @@
 	@* @RenderSection("Scripts", required: false) *@
 </body>
 </html>
+
+<style>
+    .carousel-inner .item a img {
+        width: 750px;
+        height: 300px;
+        object-fit: cover;
+    }
+
+	.hover-effect {
+		transition: transform 0.3s ease, filter 0.3s ease; /* Hiệu ứng chuyển đổi */
+	}
+
+		.hover-effect:hover {
+			transform: scale(1.1); /* Phóng to ảnh */
+			filter: brightness(1.2); /* Tăng độ sáng ảnh */
+		}
+</style>

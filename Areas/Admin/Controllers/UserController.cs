@@ -135,17 +135,40 @@ namespace QLDienThoai.Areas.Admin.Controllers
 			{
 				return NotFound();
 			}
+
 			var user = await _userManager.FindByIdAsync(id);
 			if (user == null)
 			{
 				return NotFound();
 			}
-			var deleteResult = await _userManager.DeleteAsync(user);
-			if (deleteResult == null)
+
+			// Xóa các roles của user trước khi xóa user
+			var roles = await _userManager.GetRolesAsync(user);
+			if (roles.Any())
 			{
+				var removeRolesResult = await _userManager.RemoveFromRolesAsync(user, roles);
+				if (!removeRolesResult.Succeeded)
+				{
+					foreach (var error in removeRolesResult.Errors)
+					{
+						ModelState.AddModelError(string.Empty, error.Description);
+					}
+					return View("Error");
+				}
+			}
+
+			// Xóa user
+			var deleteResult = await _userManager.DeleteAsync(user);
+			if (!deleteResult.Succeeded)
+			{
+				foreach (var error in deleteResult.Errors)
+				{
+					ModelState.AddModelError(string.Empty, error.Description);
+				}
 				return View("Error");
 			}
-			TempData["success"] = "Xóa user thành công";
+
+			TempData["success"] = "Xóa user thành công!";
 			return RedirectToAction("Index");
 		}
 
