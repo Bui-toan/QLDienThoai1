@@ -7,7 +7,7 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Brands")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class BrandController : Controller
     {
         private readonly QldienThoaiContext _context = new QldienThoaiContext();

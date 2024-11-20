@@ -9,8 +9,9 @@ namespace QLDienThoai.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Contact")]
+	[Authorize(Roles = "Admin")]
 
-    public class ContactController : Controller
+	public class ContactController : Controller
     {
         private readonly QldienThoaiContext _context;
         private readonly IWebHostEnvironment _environment;
