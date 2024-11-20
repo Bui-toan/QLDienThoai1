@@ -26,7 +26,7 @@
 					<div class="single-products">
 					  <a asp-action="Details" asp-controller="Product" asp-route-IdSanPham="@item.IdSanPham">
 						<div class="productinfo text-center">
-							<img src="~/images/@item.Images" alt="@item.Name" width="100%" />
+								<img src="~/images/@item.Images" alt="@item.Name" height="200px" weight="100px" />
 							<h4>@item.Name</h4>
 								<h2>@item.Price.ToString() USD</h2>
 							<p>Danh mục : @item.Categories.Name</p>
