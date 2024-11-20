@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLDienThoai.Models;
 
@@ -82,13 +81,28 @@ namespace QLDienThoai.Areas.Admin.Controllers
         [Route("Delete")]
         public async Task<IActionResult> Delete(int idBrand)
         {
+            // Kiểm tra xem có sản phẩm liên quan không
+            var relatedProducts = await _context.SanPhams.Where(sp => sp.BrandId == idBrand).ToListAsync();
+            if (relatedProducts.Any())
+            {
+                TempData["message"] = "Không thể xóa thương hiệu vì còn sản phẩm liên quan.";
+                return RedirectToAction("Index", "Brand");
+            }
 
-            Brands brand = await _context.Brands.FindAsync(idBrand);
+            // Tìm thương hiệu và xóa nếu không có sản phẩm liên quan
+            var brand = await _context.Brands.FindAsync(idBrand);
+            if (brand == null)
+            {
+                TempData["message"] = "Thương hiệu không tồn tại.";
+                return RedirectToAction("Index", "Brand");
+            }
+
             _context.Brands.Remove(brand);
             await _context.SaveChangesAsync();
-            TempData["message"] = "Danh mục đã xóa";
+            TempData["message"] = "Thương hiệu đã được xóa.";
             return RedirectToAction("Index", "Brand");
         }
+
 
     }
 }
