@@ -86,11 +86,17 @@ namespace QLDienThoai.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Gán role "User" cho tài khoản mới
-                    var roleResult = await _userManager.AddToRoleAsync(newUser, "User");
+                    // Kiểm tra xem có tài khoản nào trong vai trò Admin hay chưa
+                    var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
+
+                    string role = adminUsers.Count == 0 ? "Admin" : "User";
+
+                    // Gán role cho tài khoản mới
+                    var roleResult = await _userManager.AddToRoleAsync(newUser, role);
+
                     if (roleResult.Succeeded)
                     {
-                        TempData["success"] = "Tạo user thành công!";
+                        TempData["success"] = $"Tạo tài khoản thành công với vai trò {role}!";
                         return Redirect("/account/login");
                     }
 
